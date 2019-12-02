@@ -34,7 +34,8 @@ class MainMenu extends Component {
 
   render() {
     const { user } = this.state;
-    return <div className="main_menu">{user ? <Home /> : <Login />}</div>;
+    // return <div className="main_menu">{user ? <Home /> : <Login />}</div>;
+    return <Home></Home>;
   }
 }
 
