@@ -45,7 +45,7 @@ class Login extends Component {
     return (
       <Form className="login-form">
         <h1>
-          <span className="font-weight-bold">thuegiangvien</span>.com
+          <span className="font-weight-bold">thuegiasu</span>.com
         </h1>
         <h2 className="text-center">Xin chào!</h2>
         <FormGroup>

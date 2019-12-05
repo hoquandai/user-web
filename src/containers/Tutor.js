@@ -3,6 +3,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'font-awesome/css/font-awesome.min.css';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class Tutor extends React.Component {
   render() {
@@ -19,7 +20,9 @@ class Tutor extends React.Component {
             <header className="entry-header">
               <div className="entry-meta flex align-items-center">
                 <div className="course-author">
-                  <a href="#">Ms. Lara Croft </a>
+                  <a href="#">
+                    <Link to="/detailTutor">Ms. Lara Croft</Link>
+                  </a>
                 </div>
 
                 <div></div>
