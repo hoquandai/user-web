@@ -7,6 +7,7 @@ import MainMenu from '../containers/MainMenu';
 import Home from '../containers/Home';
 import DetailTutor from '../containers/DetailTutor';
 import Footer from '../containers/Footer';
+import Profile from '../containers/Profile';
 
 const Container = () => {
   return (
@@ -17,6 +18,7 @@ const Container = () => {
         <Route exact path="/signup" render={() => <Register />} />
         <Route exact path="/login" render={() => <Login />} />
         <Route exact path="/detailTutor" render={() => <DetailTutor />} />
+        <Route exact path="/profile" render={() => <Profile />} />
       </Switch>
       <Footer></Footer>
     </>

@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {
@@ -7,6 +7,7 @@ import {
   GoogleLoginButton
 } from 'react-social-login-buttons';
 import fire from '../../config/firebase';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -84,9 +85,11 @@ class Login extends Component {
         <FacebookLoginButton className="mt-3 md-3" />
         <GoogleLoginButton className="mt-3 md-3" />
         <div className="text-center">
-          <a href="/#signup">Tạo tài khoản</a>
+          <a>
+            <Link to="/signup">Tạo tài khoản</Link>
+          </a>
           <span className="p-2">|</span>
-          <a href="/forgot-password">Quên mật khẩu?</a>
+          <a>Quên mật khẩu?</a>
         </div>
       </Form>
     );

@@ -1,6 +1,7 @@
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
   constructor(props) {
@@ -45,7 +46,9 @@ class Signup extends Component {
         <Button className="btn-lg btn-dark btn-block">Đăng kí</Button>
         <div className="text-center pt-3">Đã có tài khoản?</div>
         <div className="text-center">
-          <a href="/#login">Đăng nhập</a>
+          <a>
+            <Link to="/login">Đăng nhập</Link>
+          </a>
         </div>
       </Form>
     );

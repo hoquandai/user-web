@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
@@ -6,11 +7,11 @@ class DetailTutor extends Component {
   render() {
     return (
       <>
-        <div class="col-12 col-lg-8">
+        <div class="container col-12 col-lg-8">
           <div class="single-course-wrap">
             <div class="instructors-info ml-5">
               <header class="entry-heading">
-                <h2 class="entry-title">Instructors</h2>
+                <h2 class="entry-title">Thông tin chi tiết</h2>
               </header>
               {/* .entry-heading */}
 
