@@ -2,7 +2,7 @@
 import axios from 'axios';
 import * as ActionsTypes from '../constants/actionsType';
 
-const apiURL = 'https://servercarovn.herokuapp.com/users';
+const apiURL = 'https://stormy-ridge-33799.herokuapp.com/';
 const client = axios.create({
   baseURL: apiURL,
   headers: {

@@ -128,7 +128,7 @@ class Home extends Component {
               {/* .col */}
               <div className="col-12 col-lg-6 flex align-content-center mt-5 mt-lg-0">
                 <div className="ezuca-video position-relative">
-                  <img src="images/video-screenshot.png" alt=""></img>
+                  <img src="images/video-screenshot.png" alt="" />
                 </div>{' '}
                 {/* .ezuca-video */}
               </div>{' '}
@@ -212,12 +212,13 @@ class Home extends Component {
                     </h2>
 
                     <div className="event-location">
-                      <i className="fa fa-map-marker"></i>40 Baria Sreet 133/2
-                      NewYork City, US
+                      <i className="fa fa-map-marker" />
+                      40 Baria Sreet 133/2 NewYork City, US
                     </div>
 
                     <div className="event-duration">
-                      <i className="fa fa-calendar"></i>10 Dec - 12 dec
+                      <i className="fa fa-calendar" />
+                      10 Dec - 12 dec
                     </div>
                   </header>{' '}
                   {/* .entry-header */}
@@ -236,7 +237,7 @@ class Home extends Component {
                   <div className="event-content-wrap">
                     <header className="entry-header">
                       <div className="posted-date">
-                        <i className="fa fa-calendar"></i> 22 Mar 2018
+                        <i className="fa fa-calendar" /> 22 Mar 2018
                       </div>{' '}
                       {/* .posted-date */}
                       <h2 className="entry-title">
@@ -273,7 +274,7 @@ class Home extends Component {
                   <div className="event-content-wrap">
                     <header className="entry-header">
                       <div className="posted-date">
-                        <i className="fa fa-calendar"></i> 22 Mar 2018
+                        <i className="fa fa-calendar" /> 22 Mar 2018
                       </div>{' '}
                       {/* .posted-date */}
                       <h2 className="entry-title">

@@ -1,5 +1,7 @@
+/* eslint-disable react/prefer-stateless-function */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import { Link } from 'react-router-dom';
@@ -31,7 +33,7 @@ class Tutor extends React.Component {
                   </a>
                 </div>
 
-                <div></div>
+                <div />
               </div>
               <h2 className="entry-title">
                 <a>Nhiệt tình, và thân thiện với học sinh</a>
@@ -45,11 +47,11 @@ class Tutor extends React.Component {
             <footer className="entry-footer flex justify-content-between align-items-center">
               <div className="course-cost">$45/h</div> {/* .course-cost */}
               <div className="course-ratings flex justify-content-end align-items-center">
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star-o"></span>
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star-o" />
 
                 <span className="course-ratings-count">(4 votes)</span>
               </div>

@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import fire from '../config/firebase';
+import { Form, Nav, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
-import { Form, Nav, Button } from 'reactstrap';
+import fire from '../config/firebase';
 
 class MainMenu extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class MainMenu extends Component {
   }
 
   componentDidMount() {
-    this.authListener();
+    // this.authListener();
   }
 
   authListener() {
@@ -44,13 +44,14 @@ class MainMenu extends Component {
               <div className="row">
                 <div className="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                   <div className="header-bar-email d-flex align-items-center">
-                    <i className="fa fa-envelope"></i>
-                    <a href="#">ThueGiaSu@gmail.com</a>
+                    <i className="fa fa-envelope" />
+                    <a href="/">ThueGiaSu@gmail.com</a>
                   </div>
 
                   <div className="header-bar-text lg-flex align-items-center">
                     <p>
-                      <i className="fa fa-phone"></i>001-1234-88888{' '}
+                      <i className="fa fa-phone" />
+                      001-1234-88888{' '}
                     </p>
                   </div>
                 </div>
@@ -76,7 +77,7 @@ class MainMenu extends Component {
                     <div className="header-bar-menu">
                       <ul className="flex justify-content-center align-items-center py-2 pt-md-0">
                         <li>
-                          <a>Đăng Xuất</a>
+                          <a href="/">Đăng Xuất</a>
                         </li>
                       </ul>
                     </div>
@@ -103,7 +104,7 @@ class MainMenu extends Component {
                 <div className="flex justify-content-center align-items-center col-9 col-lg-3">
                   <div className="site-branding">
                     <h1 className="site-title">
-                      <a>
+                      <a href="/">
                         <Link to="/">
                           Ezu<span>ca</span>
                         </Link>
@@ -116,13 +117,13 @@ class MainMenu extends Component {
                       <input
                         type="search"
                         placeholder="Bạn đang tìm một gia sư?"
-                      ></input>
+                      />
                       <Button
                         type="submit"
                         value=""
                         classNameName="flex justify-content-center align-items-center"
                       >
-                        <i className="fa fa-search"></i>
+                        <i className="fa fa-search" />
                       </Button>
                     </Form>
                   </div>
@@ -135,35 +136,32 @@ class MainMenu extends Component {
                         <Link to="/"> Home</Link>
                       </li>
                       <li>
-                        <a>About</a>
+                        <a href="/#login">About</a>
                       </li>
                       <li>
-                        <a>Courses</a>
+                        <a href="/#infoUser">Courses</a>
                       </li>
                       <li>
-                        <a>blog</a>
+                        <a href="/">blog</a>
                       </li>
                       <li>
-                        <a>Contact</a>
+                        <a href="/">Contact</a>
                       </li>
                     </ul>
 
                     <div className="hamburger-menu d-lg-none">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                      <span />
+                      <span />
+                      <span />
+                      <span />
                     </div>
 
                     <div className="header-bar-cart">
                       <a
-                        href="#"
+                        href="/"
                         className="flex justify-content-center align-items-center"
                       >
-                        <span
-                          aria-hidden="true"
-                          className="icon_bag_alt"
-                        ></span>
+                        <span aria-hidden="true" className="icon_bag_alt" />
                       </a>
                     </div>
                   </Nav>
