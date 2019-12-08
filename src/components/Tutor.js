@@ -4,7 +4,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
-import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 class Tutor extends React.Component {

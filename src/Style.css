@@ -2770,3 +2770,8 @@ p.footer-copyright {
 .inputfile + label:hover {
   background-color: #595959;
 }
+
+.login
+{
+  color: #19c880;
+}

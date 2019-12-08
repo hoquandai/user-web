@@ -1,14 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Login from '../containers/Login/Login';
-import Register from '../containers/Signup/signup';
-import MainMenu from '../containers/MainMenu';
-import Home from '../containers/Home';
-import DetailTutor from '../containers/DetailTutor';
-import Footer from '../containers/Footer';
-import Profile from '../containers/Profile';
-import InfoUser from '../containers/User/Info';
+import Login from './Login';
+import Register from '../components/Signup/signup';
+import MainMenu from './MainMenu';
+import Home from '../components/Home';
+import DetailTutor from './DetailTutor';
+import Footer from '../components/Footer';
+import Profile from './Profile';
+import InfoUser from '../components/User/Info';
 
 const Container = () => {
   return (

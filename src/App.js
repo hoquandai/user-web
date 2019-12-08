@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Container from './components/Container';
+import Container from './container/Container';
 
 import './App.css';
 

@@ -5,36 +5,34 @@ import { withRouter, Link } from 'react-router-dom';
 import { Form, Nav, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
-import fire from '../config/firebase';
+// import fire from '../config/firebase';
 
 class MainMenu extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: null
-    };
-  }
+  handleLogout = () => {
+    const { logOut } = this.props;
+    logOut();
+  };
 
-  componentDidMount() {
-    // this.authListener();
-  }
+  // componentDidMount() {
+  //   // this.authListener();
+  // }
 
-  authListener() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log('ok');
-        this.setState({ user });
-        // localStorage.setItem('user', user.uid);
-      } else {
-        console.log('error');
-        this.setState({ user: null });
-        // localStorage.removeItem('user');
-      }
-    });
-  }
+  // authListener() {
+  //   fire.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       console.log('ok');
+  //       this.setState({ user });
+  //       // localStorage.setItem('user', user.uid);
+  //     } else {
+  //       console.log('error');
+  //       this.setState({ user: null });
+  //       // localStorage.removeItem('user');
+  //     }
+  //   });
+  // }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
     // return <div className="main_menu">{user ? <Home /> : <Login />}</div>;
     return (
       <div className="hero-content">
@@ -73,7 +71,7 @@ class MainMenu extends Component {
                       </Form>
                     </div> */}
 
-                  {user ? (
+                  {Object.keys(user).length > 1 ? (
                     <div className="header-bar-menu">
                       <ul className="flex justify-content-center align-items-center py-2 pt-md-0">
                         <li>
