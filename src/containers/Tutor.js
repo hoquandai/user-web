@@ -1,9 +1,10 @@
+/* eslint-disable react/prefer-stateless-function */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'font-awesome/css/font-awesome.min.css';
 import '../App.css';
-import { Link } from 'react-router-dom';
 
 class Tutor extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class Tutor extends React.Component {
         <div className="course-content">
           <figure className="course-thumbnail">
             <a href="#">
-              <img src="images/1.jpg" alt=""></img>
+              <img src="images/1.jpg" alt="" />
             </a>
           </figure>
 
@@ -25,7 +26,7 @@ class Tutor extends React.Component {
                   </a>
                 </div>
 
-                <div></div>
+                <div />
               </div>
               <h2 className="entry-title">
                 <a href="#">The Complete Android Developer Course</a>
@@ -38,11 +39,11 @@ class Tutor extends React.Component {
               </div>{' '}
               {/* .course-cost */}
               <div className="course-ratings flex justify-content-end align-items-center">
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star-o"></span>
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star checked" />
+                <span className="fa fa-star-o" />
 
                 <span className="course-ratings-count">(4 votes)</span>
               </div>

@@ -7,18 +7,20 @@ import MainMenu from '../containers/MainMenu';
 import Home from '../containers/Home';
 import DetailTutor from '../containers/DetailTutor';
 import Footer from '../containers/Footer';
+import InfoUser from '../containers/User/Info';
 
 const Container = () => {
   return (
     <>
-      <MainMenu></MainMenu>
+      <MainMenu />
       <Switch>
         <Route exact path="/" render={() => <Home />} />
         <Route exact path="/signup" render={() => <Register />} />
         <Route exact path="/login" render={() => <Login />} />
         <Route exact path="/detailTutor" render={() => <DetailTutor />} />
+        <Route exact path="/infoUser" render={() => <InfoUser />} />
       </Switch>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

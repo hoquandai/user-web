@@ -1,11 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../Style.css';
+import { Link } from 'react-router-dom';
 import { Form, Button, Nav } from 'reactstrap';
 import { FaUser } from 'react-icons/fa';
 import Tutor from './Tutor';
-import { Link } from 'react-router-dom';
+import '../Style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Home extends Component {
   render() {
@@ -48,7 +49,7 @@ class Home extends Component {
               {/* .col */}
               <div className="col-12 col-lg-6 flex align-content-center mt-5 mt-lg-0">
                 <div className="ezuca-video position-relative">
-                  <img src="images/video-screenshot.png" alt=""></img>
+                  <img src="images/video-screenshot.png" alt="" />
                 </div>{' '}
                 {/* .ezuca-video */}
               </div>{' '}
@@ -89,12 +90,12 @@ class Home extends Component {
                 {/* .heading */}
               </div>{' '}
               {/* .col */}
-              <Tutor></Tutor>
-              <Tutor></Tutor>
-              <Tutor></Tutor>
-              <Tutor></Tutor>
-              <Tutor></Tutor>
-              <Tutor></Tutor>
+              <Tutor />
+              <Tutor />
+              <Tutor />
+              <Tutor />
+              <Tutor />
+              <Tutor />
               <div className="col-12 px-25 flex justify-content-center">
                 <a className="btn" href="#">
                   Xem tất cả
@@ -121,7 +122,7 @@ class Home extends Component {
                 <div className="featured-event-content">
                   <figure className="event-thumbnail position-relative m-0">
                     <a href="#">
-                      <img src="images/event-1.jpg" alt=""></img>
+                      <img src="images/event-1.jpg" alt="" />
                     </a>
                     <div className="posted-date position-absolute">
                       <div className="day">23</div>
@@ -139,12 +140,13 @@ class Home extends Component {
                     </h2>
 
                     <div className="event-location">
-                      <i className="fa fa-map-marker"></i>40 Baria Sreet 133/2
-                      NewYork City, US
+                      <i className="fa fa-map-marker" />
+                      40 Baria Sreet 133/2 NewYork City, US
                     </div>
 
                     <div className="event-duration">
-                      <i className="fa fa-calendar"></i>10 Dec - 12 dec
+                      <i className="fa fa-calendar" />
+                      10 Dec - 12 dec
                     </div>
                   </header>{' '}
                   {/* .entry-header */}
@@ -156,14 +158,14 @@ class Home extends Component {
                 <div className="event-content flex flex-wrap justify-content-between align-content-stretch">
                   <figure className="event-thumbnail">
                     <a href="#">
-                      <img src="images/event-2.jpg" alt=""></img>
+                      <img src="images/event-2.jpg" alt="" />
                     </a>
                   </figure>{' '}
                   {/* .course-thumbnail */}
                   <div className="event-content-wrap">
                     <header className="entry-header">
                       <div className="posted-date">
-                        <i className="fa fa-calendar"></i> 22 Mar 2018
+                        <i className="fa fa-calendar" /> 22 Mar 2018
                       </div>{' '}
                       {/* .posted-date */}
                       <h2 className="entry-title">
@@ -193,14 +195,14 @@ class Home extends Component {
                 <div className="event-content flex flex-wrap justify-content-between align-content-lg-stretch">
                   <figure className="event-thumbnail">
                     <a href="#">
-                      <img src="images/event-3.jpg" alt=""></img>
+                      <img src="images/event-3.jpg" alt="" />
                     </a>
                   </figure>{' '}
                   {/* .course-thumbnail */}
                   <div className="event-content-wrap">
                     <header className="entry-header">
                       <div className="posted-date">
-                        <i className="fa fa-calendar"></i> 22 Mar 2018
+                        <i className="fa fa-calendar" /> 22 Mar 2018
                       </div>{' '}
                       {/* .posted-date */}
                       <h2 className="entry-title">
@@ -241,85 +243,85 @@ class Home extends Component {
           <div className="gallery-wrap flex flex-wrap">
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/a.jpg" alt=""></img>
+                <img src="images/a.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/b.jpg" alt=""></img>
+                <img src="images/b.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid2x2">
               <a href="#">
-                <img src="images/c.jpg" alt=""></img>
+                <img src="images/c.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/d.jpg" alt=""></img>
+                <img src="images/d.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/e.jpg" alt=""></img>
+                <img src="images/e.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid2x1">
               <a href="#">
-                <img src="images/g.jpg" alt=""></img>
+                <img src="images/g.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid2x1">
               <a href="#">
-                <img src="images/h.jpg" alt=""></img>
+                <img src="images/h.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/i.jpg" alt=""></img>
+                <img src="images/i.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid2x2 ">
               <a href="#">
-                <img src="images/j.jpg" alt=""></img>
+                <img src="images/j.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/k.jpg" alt=""></img>
+                <img src="images/k.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/l.jpg" alt=""></img>
+                <img src="images/l.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid2x1">
               <a href="#">
-                <img src="images/m.jpg" alt=""></img>
+                <img src="images/m.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid3x1">
               <a href="#">
-                <img src="images/n.jpg" alt=""></img>
+                <img src="images/n.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}
             <div className="gallery-grid gallery-grid1x1">
               <a href="#">
-                <img src="images/o.jpg" alt=""></img>
+                <img src="images/o.jpg" alt="" />
               </a>
             </div>{' '}
             {/* .gallery-grid */}

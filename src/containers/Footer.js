@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
@@ -12,8 +13,8 @@ class Footer extends Component {
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-3">
                   <div className="foot-about">
-                    <a className="foot-logo" href="#">
-                      <img src="images/foot-logo.png" alt=""></img>
+                    <a className="foot-logo" href="/">
+                      <img src="images/foot-logo.png" alt="" />
                     </a>
                     <p>Chấp cánh chi thức cùng với tương lai con trẻ</p>
                   </div>{' '}
@@ -39,31 +40,31 @@ class Footer extends Component {
 
                     <ul className="w-50">
                       <li>
-                        <a href="#">About </a>
+                        <a href="foo">Abouts </a>
                       </li>
                       <li>
-                        <a href="#">Terms of Use </a>
+                        <a href="foo">Terms of Use </a>
                       </li>
                       <li>
-                        <a href="#">Privacy Policy </a>
+                        <a href="foo">Privacy Policy </a>
                       </li>
                       <li>
-                        <a href="#">Contact Us</a>
+                        <a href="foo">Contact Us</a>
                       </li>
                     </ul>
 
                     <ul className="w-50">
                       <li>
-                        <a href="#">Documentation</a>
+                        <a href="foo">Documentation</a>
                       </li>
                       <li>
-                        <a href="#">Forums</a>
+                        <a href="foo">Forums</a>
                       </li>
                       <li>
-                        <a href="#">Language Packs</a>
+                        <a href="foo">Language Packs</a>
                       </li>
                       <li>
-                        <a href="#">Release Status</a>
+                        <a href="foo">Release Status</a>
                       </li>
                     </ul>
                   </div>{' '}
@@ -76,23 +77,23 @@ class Footer extends Component {
 
                     <ul className="follow-us flex flex-wrap align-items-center">
                       <li>
-                        <a href="#">
-                          <i className="fa fa-facebook"></i>
+                        <a href="foo">
+                          <i className="fa fa-facebook" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
-                          <i className="fa fa-google-plus"></i>
+                        <a href="foo">
+                          <i className="fa fa-google-plus" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
-                          <i className="fa fa-instagram"></i>
+                        <a href="foo">
+                          <i className="fa fa-instagram" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
-                          <i className="fa fa-twitter"></i>
+                        <a href="foo">
+                          <i className="fa fa-twitter" />
                         </a>
                       </li>
                     </ul>
