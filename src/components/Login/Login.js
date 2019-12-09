@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Alert } from 'reactstrap';
 import {
   FacebookLoginButton,
   GoogleLoginButton
@@ -9,64 +9,87 @@ import {
 // import fire from '../../config/firebase';
 import { Link } from 'react-router-dom';
 
+function AlertForm(props) {
+  const { kindAlert, message } = props;
+  if (kindAlert === 'failed') {
+    return (
+      <Alert color="danger">
+        Có lỗi xảy ra!
+        <p>{message};</p>
+      </Alert>
+    );
+  }
+  if (kindAlert === 'success') {
+    return (
+      <Alert color="success">
+        Đăng nhập thành công.
+        <Link className="alert-link" to="/Home">
+          Nhấn vào đây để tiếp tục.
+        </Link>
+      </Alert>
+    );
+  }
+  if (kindAlert === 'missFill') {
+    return (
+      <Alert color="danger">Vui lòng điền đầy đủ thông tin và thử lại!</Alert>
+    );
+  }
+  return null;
+}
+
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      kindAlert: 'normal',
+      message: 'none'
     };
-  }
-
-  realTimeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-
-  realTimePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
   }
 
   handleSubmit = e => {
     const { login } = this.props;
     e.preventDefault();
 
-    const { email, password } = this.state;
+    const email = e.target.exampleEmail.value;
+    const password = e.target.examplePassword.value;
 
     if (!email || !password) {
-      // this.setState({
-      //   kindAlert: 'missFill'
-      // });
+      this.setState({
+        kindAlert: 'missFill'
+      });
       return;
     }
 
     login(email, password);
   };
 
+  renderAlert() {
+    const { kindAlert, message } = this.state;
+    return <AlertForm kindAlert={kindAlert} message={message} />;
+  }
+
   render() {
     return (
       <div className="container login-form">
         <div>
+          {this.renderAlert()}
           <Form onSubmit={e => this.handleSubmit(e)}>
             <h2>
               <span className="login">Đăng Nhập</span>
             </h2>
-            <FormGroup controlId="formBasicEmail">
+            <FormGroup>
               <Label>Email</Label>
               <Input
-                onChange={e => this.realTimeEmail(e)}
+                id="exampleEmail"
                 name="email"
                 type="email"
                 placeholder="Địa chỉ email"
               />
             </FormGroup>
-            <FormGroup controlId="formBasicPassword">
+            <FormGroup>
               <Label>Mật khẩu</Label>
               <Input
-                onChange={e => this.realTimePassword(e)}
+                id="examplePassword"
                 name="password"
                 type="password"
                 placeholder="Mật khẩu"

@@ -1,56 +1,173 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import fetch from 'cross-fetch';
+
+function AlertForm(props) {
+  const { kindAlert, message } = props;
+  if (kindAlert === 'failed') {
+    return (
+      <Alert color="danger">
+        Có lỗi xảy ra!
+        <p>{message};</p>
+      </Alert>
+    );
+  }
+  if (kindAlert === 'success') {
+    return (
+      <Alert color="success">
+        Đăng ký thành công. Bạn có thể đăng nhập ở đây{' '}
+        <Link className="alert-link" to="/login">
+          Đăng Nhập
+        </Link>
+      </Alert>
+    );
+  }
+  if (kindAlert === 'missFill') {
+    return (
+      <Alert color="danger">Vui lòng điền đầy đủ thông tin và thử lại!</Alert>
+    );
+  }
+  if (kindAlert === 'conFirmFailed') {
+    return (
+      <Alert color="danger">
+        Nhập lại mật khẩu không chính xác. Vui lòng nhập lại!
+      </Alert>
+    );
+  }
+  return null;
+}
 
 class Signup extends Component {
   constructor(props) {
     super(props);
-    // this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      email: '',
-      password: ''
+      passwordConfirm: '',
+      kindAlert: 'normal',
+      message: 'none'
     };
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+
+    const email = e.target.exampleEmail.value;
+    const password = e.target.examplePassword.value;
+    const passwordConfirm = e.target.examplePasswordConfirm.value;
+    const type = e.target.exampleSelect.value;
+    // const { email, password, passwordConfirm } = this.state;
+    let res = true;
+
+    if (!email || !password || !passwordConfirm) {
+      this.setState({
+        kindAlert: 'missFill'
+      });
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      this.setState({
+        kindAlert: 'conFirmFailed'
+      });
+      return;
+    }
+
+    fetch('https://btcn6.herokuapp.com/users/register', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        type,
+        email,
+        password
+      })
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (!res) {
+          this.setState({
+            kindAlert: 'failed',
+            message: response.message
+          });
+        } else {
+          this.setState({
+            kindAlert: 'success'
+          });
+        }
+      });
   };
 
-  handleChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
+  renderAlert() {
+    const { kindAlert, message } = this.state;
+    return <AlertForm kindAlert={kindAlert} message={message} />;
+  }
 
   render() {
     return (
-      <Form className="login-form">
-        <h1>
-          <span className="font-weight-bold">thuegiasu</span>.com
-        </h1>
-        <h2 className="text-center">Xin chào!</h2>
-        <FormGroup>
-          <Label>Tên đăng nhập hoặc Email:</Label>
-          <Input type="email" placeholder="Email" id="email" />
-        </FormGroup>
-        <FormGroup>
-          <Label>Mật khẩu:</Label>
-          <Input type="password" placeholder="Password" id="password" />
-        </FormGroup>
-        <FormGroup>
-          <Label>Nhập lại mật khẩu:</Label>
-          <Input type="password" placeholder="Password" id="password" />
-        </FormGroup>
-        <Button className="btn-lg btn-dark btn-block">Đăng kí</Button>
+      <div className="container login-form">
+        <div>
+          {this.renderAlert()}
+          <Form onSubmit={e => this.handleSubmit(e)}>
+            <h2>
+              <span className="login">Đăng Ký</span>
+            </h2>
+            <FormGroup>
+              <Label>Email</Label>
+              <Input
+                name="email"
+                type="email"
+                id="exampleEmail"
+                placeholder="Địa chỉ email"
+              />
+            </FormGroup>
+            <FormGroup controlId="formBasicPassword">
+              <Label>Mật khẩu</Label>
+              <Input
+                name="password"
+                type="password"
+                id="examplePassword"
+                placeholder="Mật khẩu"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Nhập lại mật khẩu</Label>
+              <Input
+                name="passwordConfirm"
+                type="password"
+                id="examplePasswordConfirm"
+                placeholder="Nhập lại mật khẩu"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="exampleSelect">Loại Người Dùng</Label>
+              <Input type="select" name="select" id="exampleSelect">
+                <option>Người dạy</option>
+                <option>Người học</option>
+              </Input>
+            </FormGroup>
+            <div className="ViewProfile">
+              <Button variant="primary" type="submit">
+                Đăng ký
+              </Button>
+            </div>
+          </Form>
+        </div>
         <div className="text-center pt-3">Đã có tài khoản?</div>
         <div className="text-center">
           <a>
             <Link to="/login">Đăng nhập</Link>
           </a>
         </div>
-      </Form>
+      </div>
     );
   }
 }

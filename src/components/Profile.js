@@ -6,6 +6,11 @@ import { Form, FormGroup, Button, Input, Label } from 'reactstrap';
 
 class Profile extends React.Component {
   handleSubmitChangeInfo = e => {
+    // const userName = e.target.exampleName.value;
+    // const userAddress = e.target.exampleAddress.value;
+    // const phoneNumber = e.target.examplePhoneNumber.value;
+    // const userIntro = e.target.exampleIntro.value;
+    // const userPrice = e.target.examplePrice.value;
     return;
   };
 
@@ -62,6 +67,19 @@ class Profile extends React.Component {
                     id="examplePhoneNumber"
                     placeholder="Số điện thoại"
                   />
+                </FormGroup>
+                <FormGroup>
+                  <Label className="col-lg-3">Giá dạy học</Label>
+                  <Input
+                    type="number"
+                    name="Price"
+                    id="examplePrice"
+                    placeholder="VND"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="exampleText">Tự Giới Thiệu</Label>
+                  <Input type="textarea" name="text" id="exampleIntro" />
                 </FormGroup>
                 <div className="ViewProfile">
                   <Button variant="primary" type="submit">
