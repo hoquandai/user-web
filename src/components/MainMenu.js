@@ -9,6 +9,7 @@ import '../Style.css';
 
 class MainMenu extends Component {
   handleLogout = () => {
+    sessionStorage.clear();
     const { logOut } = this.props;
     logOut();
   };
@@ -32,7 +33,7 @@ class MainMenu extends Component {
   // }
 
   render() {
-    const { user } = this.props;
+    // const { user } = this.props;
     // return <div className="main_menu">{user ? <Home /> : <Login />}</div>;
     return (
       <div className="hero-content">
@@ -43,7 +44,7 @@ class MainMenu extends Component {
                 <div className="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                   <div className="header-bar-email d-flex align-items-center">
                     <i className="fa fa-envelope" />
-                    <a href="/">ThueGiaSu@gmail.com</a>
+                    <a>ThueGiaSu@gmail.com</a>
                   </div>
 
                   <div className="header-bar-text lg-flex align-items-center">
@@ -71,13 +72,11 @@ class MainMenu extends Component {
                       </Form>
                     </div> */}
 
-                  {Object.keys(user).length > 1 ? (
-                    <div className="header-bar-menu">
-                      <ul className="flex justify-content-center align-items-center py-2 pt-md-0">
-                        <li>
-                          <a href="/">Đăng Xuất</a>
-                        </li>
-                      </ul>
+                  {sessionStorage.getItem('user') ? (
+                    <div className="ViewProfile">
+                      <Button onClick={this.handleLogout} variant="primary">
+                        Đăng xuất
+                      </Button>
                     </div>
                   ) : (
                     <div className="header-bar-menu">
@@ -102,7 +101,7 @@ class MainMenu extends Component {
                 <div className="flex justify-content-center align-items-center col-9 col-lg-3">
                   <div className="site-branding">
                     <h1 className="site-title">
-                      <a href="/">
+                      <a>
                         <Link to="/">
                           Ezu<span>ca</span>
                         </Link>
@@ -133,18 +132,11 @@ class MainMenu extends Component {
                       <li className="current-menu-item">
                         <Link to="/"> Home</Link>
                       </li>
-                      <li>
-                        <a href="/#login">About</a>
-                      </li>
-                      <li>
-                        <a href="/#infoUser">Courses</a>
-                      </li>
-                      <li>
-                        <a href="/">blog</a>
-                      </li>
-                      <li>
-                        <a href="/">Contact</a>
-                      </li>
+                      {sessionStorage.getItem('user') ? (
+                        <li>
+                          <Link to="/profile">Profile</Link>
+                        </li>
+                      ) : null}
                     </ul>
 
                     <div className="hamburger-menu d-lg-none">
@@ -155,10 +147,7 @@ class MainMenu extends Component {
                     </div>
 
                     <div className="header-bar-cart">
-                      <a
-                        href="/"
-                        className="flex justify-content-center align-items-center"
-                      >
+                      <a className="flex justify-content-center align-items-center">
                         <span aria-hidden="true" className="icon_bag_alt" />
                       </a>
                     </div>

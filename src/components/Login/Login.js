@@ -22,8 +22,8 @@ function AlertForm(props) {
   if (kindAlert === 'success') {
     return (
       <Alert color="success">
-        Đăng nhập thành công.
-        <Link className="alert-link" to="/Home">
+        {message}
+        <Link className="alert-link" to="/">
           Nhấn vào đây để tiếp tục.
         </Link>
       </Alert>
@@ -65,6 +65,13 @@ class Login extends Component {
 
   renderAlert() {
     const { kindAlert, message } = this.state;
+    const { user } = this.props;
+    if (sessionStorage.getItem('userToken')) {
+      return <AlertForm kindAlert="success" message="Đăng nhập thành công." />;
+    }
+    if (Object.keys(user).length === 1) {
+      return <AlertForm kindAlert="failed" message={user.message} />;
+    }
     return <AlertForm kindAlert={kindAlert} message={message} />;
   }
 

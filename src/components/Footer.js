@@ -13,7 +13,7 @@ class Footer extends Component {
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-3">
                   <div className="foot-about">
-                    <a className="foot-logo" href="/">
+                    <a className="foot-logo">
                       <img src="images/foot-logo.png" alt="" />
                     </a>
                     <p>Chấp cánh chi thức cùng với tương lai con trẻ</p>
@@ -40,31 +40,31 @@ class Footer extends Component {
 
                     <ul className="w-50">
                       <li>
-                        <a href="foo">Abouts </a>
+                        <a>Abouts </a>
                       </li>
                       <li>
-                        <a href="foo">Terms of Use </a>
+                        <a>Terms of Use </a>
                       </li>
                       <li>
-                        <a href="foo">Privacy Policy </a>
+                        <a>Privacy Policy </a>
                       </li>
                       <li>
-                        <a href="foo">Contact Us</a>
+                        <a>Contact Us</a>
                       </li>
                     </ul>
 
                     <ul className="w-50">
                       <li>
-                        <a href="foo">Documentation</a>
+                        <a>Documentation</a>
                       </li>
                       <li>
-                        <a href="foo">Forums</a>
+                        <a>Forums</a>
                       </li>
                       <li>
-                        <a href="foo">Language Packs</a>
+                        <a>Language Packs</a>
                       </li>
                       <li>
-                        <a href="foo">Release Status</a>
+                        <a>Release Status</a>
                       </li>
                     </ul>
                   </div>{' '}
@@ -77,22 +77,22 @@ class Footer extends Component {
 
                     <ul className="follow-us flex flex-wrap align-items-center">
                       <li>
-                        <a href="foo">
+                        <a>
                           <i className="fa fa-facebook" />
                         </a>
                       </li>
                       <li>
-                        <a href="foo">
+                        <a>
                           <i className="fa fa-google-plus" />
                         </a>
                       </li>
                       <li>
-                        <a href="foo">
+                        <a>
                           <i className="fa fa-instagram" />
                         </a>
                       </li>
                       <li>
-                        <a href="foo">
+                        <a>
                           <i className="fa fa-twitter" />
                         </a>
                       </li>
