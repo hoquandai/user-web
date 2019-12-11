@@ -44,7 +44,12 @@ class Tutor extends React.Component {
             </p>
 
             <footer className="entry-footer flex justify-content-between align-items-center">
-              <div className="course-cost">45VND/h</div> {/* .course-cost */}
+              {this.props.user.attributes.price ? (
+                <div className="course-cost">
+                  {this.props.user.attributes.price} VND/h
+                </div>
+              ) : null}
+
               <div className="course-ratings flex justify-content-end align-items-center">
                 <span className="fa fa-star checked" />
                 <span className="fa fa-star checked" />

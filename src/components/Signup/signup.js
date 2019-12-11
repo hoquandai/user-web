@@ -55,7 +55,6 @@ class Signup extends Component {
     const email = e.target.exampleEmail.value;
     const password = e.target.examplePassword.value;
     const passwordConfirm = e.target.examplePasswordConfirm.value;
-    const type = e.target.exampleSelect.value;
     // const { email, password, passwordConfirm } = this.state;
     let res = true;
 
@@ -81,7 +80,6 @@ class Signup extends Component {
       },
 
       body: JSON.stringify({
-        type,
         email,
         password
       })
@@ -146,13 +144,6 @@ class Signup extends Component {
                 id="examplePasswordConfirm"
                 placeholder="Nhập lại mật khẩu"
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="exampleSelect">Loại Người Dùng</Label>
-              <Input type="select" name="select" id="exampleSelect">
-                <option>Người dạy</option>
-                <option>Người học</option>
-              </Input>
             </FormGroup>
             <div className="ViewProfile">
               <Button variant="primary" type="submit">

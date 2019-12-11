@@ -2774,3 +2774,12 @@ p.footer-copyright {
 .login {
   color: #19c880;
 }
+
+.selectPrice {
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  border-color: #19c880;
+  color: #19c880;
+  margin-left: 35px;
+  list-style: none;
+}

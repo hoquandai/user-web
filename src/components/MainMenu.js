@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Nav, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
@@ -137,6 +136,12 @@ class MainMenu extends Component {
                           <Link to="/profile">Profile</Link>
                         </li>
                       ) : null}
+                      <li>
+                        <a>blog</a>
+                      </li>
+                      <li>
+                        <a>Contact</a>
+                      </li>
                     </ul>
 
                     <div className="hamburger-menu d-lg-none">
@@ -187,4 +192,4 @@ class MainMenu extends Component {
   }
 }
 
-export default withRouter(connect()(MainMenu));
+export default MainMenu;

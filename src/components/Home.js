@@ -5,6 +5,16 @@ import '../Style.css';
 import { Nav } from 'reactstrap';
 import Tutor from './Tutor';
 
+function compare(a, b) {
+  if (a.attributes.price > b.attributes.price) {
+    return 1;
+  }
+  if (a.attributes.price < b.attributes.price) {
+    return -1;
+  }
+  return 0;
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +29,8 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 25000
           }
         },
         {
@@ -31,7 +42,8 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 30000
           }
         },
         {
@@ -43,7 +55,8 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 40000
           }
         },
         {
@@ -55,7 +68,8 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 50000
           }
         },
         {
@@ -67,7 +81,8 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 15000
           }
         },
         {
@@ -79,11 +94,26 @@ class Home extends Component {
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
             phone: '033444987',
-            city: 'HCM'
+            city: 'HCM',
+            price: 20000
           }
         }
       ]
     };
+    this.handleSort = this.handleSort.bind(this);
+  }
+
+  handleSort(e) {
+    if (e.target.value === 'Giá Tăng') {
+      this.setState({
+        listUser: this.state.listUser.sort(compare)
+      });
+    }
+    if (e.target.value === 'Giá Giảm') {
+      this.setState({
+        listUser: this.state.listUser.sort(compare).reverse()
+      });
+    }
   }
 
   render() {
@@ -163,6 +193,15 @@ class Home extends Component {
                         <a>Sinh</a>
                       </li>
                     </ul>
+                    <select
+                      className="selectPrice"
+                      id="price"
+                      onChange={this.handleSort}
+                    >
+                      <option value=""> Theo Giá </option>
+                      <option value="Giá Tăng">Giá Tăng</option>
+                      <option value="Giá Giảm"> Giá Giảm </option>
+                    </select>
                   </Nav>{' '}
                   {/* .courses-menu */}
                 </header>{' '}
