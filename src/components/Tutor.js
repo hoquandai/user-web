@@ -1,14 +1,14 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import { Button } from 'reactstrap';
 
 class Tutor extends React.Component {
   handleViewProfile = () => {
-    window.location.href = 'http://localhost:3000/#/detailTutor';
+    window.location.href = 'https://user-web.herokuapp.com/#/detailTutor';
   };
 
   render() {
