@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-
 import Login from './Login';
 import Register from '../components/Signup/signup';
 import MainMenu from './MainMenu';
@@ -8,11 +7,10 @@ import Home from '../components/Home';
 import DetailTutor from './DetailTutor';
 import Footer from '../components/Footer';
 import Profile from './Profile';
-import InfoUser from '../components/User/Info';
 
 class Container extends React.Component {
   PrivateRoute = ({ children }) => {
-    const user = sessionStorage.getItem('user');
+    const user = localStorage.getItem('user');
     return (
       <Route
         render={({ location }) =>
@@ -36,14 +34,21 @@ class Container extends React.Component {
       <>
         <MainMenu />
         <Switch>
-          <Route exact path="/" render={() => <Home />} />
-          <Route exact path="/signup" render={() => <Register />} />
-          <Route exact path="/login" render={() => <Login />} />
-          <Route exact path="/detailTutor" render={() => <DetailTutor />} />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/signup">
+            <Register />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/detailTutor">
+            <DetailTutor />
+          </Route>
           <this.PrivateRoute path="/profile">
             <Profile />
           </this.PrivateRoute>
-          <Route exact path="/infoUser" render={() => <InfoUser />} />
         </Switch>
         <Footer />
       </>

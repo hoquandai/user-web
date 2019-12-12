@@ -31,7 +31,7 @@ export const getUser = response => {
       })
       .then(response => {
         if (res) {
-          sessionStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('user', JSON.stringify(response.data));
           dispatch(receiveUser(response.data));
         } else {
           dispatch(loginFailed(response.message));
@@ -70,7 +70,7 @@ export const callAPILogin = (email, password) => {
       })
       .then(response => {
         if (res) {
-          sessionStorage.setItem('userToken', JSON.stringify(response));
+          localStorage.setItem('userToken', JSON.stringify(response));
           dispatch(getUser(response));
         } else {
           dispatch(loginFailed(response.message));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -13,11 +13,12 @@ import configStore from './config/configStore';
 const store = configStore();
 
 render(
-  <Provider store={store}>
-    <HashRouter>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-    </HashRouter>
-  </Provider>,
+    </Provider>
+  </BrowserRouter>,
+
   document.getElementById('root')
 );
 

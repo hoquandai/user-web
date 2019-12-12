@@ -8,7 +8,7 @@ import '../Style.css';
 
 class MainMenu extends Component {
   handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     const { logOut } = this.props;
     logOut();
   };
@@ -71,7 +71,7 @@ class MainMenu extends Component {
                       </Form>
                     </div> */}
 
-                  {sessionStorage.getItem('user') ? (
+                  {localStorage.getItem('user') ? (
                     <div className="ViewProfile">
                       <Button onClick={this.handleLogout} variant="primary">
                         Đăng xuất
@@ -131,7 +131,7 @@ class MainMenu extends Component {
                       <li className="current-menu-item">
                         <Link to="/"> Home</Link>
                       </li>
-                      {sessionStorage.getItem('user') ? (
+                      {localStorage.getItem('user') ? (
                         <li>
                           <Link to="/profile">Profile</Link>
                         </li>
