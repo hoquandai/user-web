@@ -66,7 +66,7 @@ class Login extends Component {
   renderAlert() {
     const { kindAlert, message } = this.state;
     const { user } = this.props;
-    if (sessionStorage.getItem('userToken')) {
+    if (localStorage.getItem('userToken')) {
       return <AlertForm kindAlert="success" message="Đăng nhập thành công." />;
     }
     if (Object.keys(user).length === 1) {
@@ -76,59 +76,66 @@ class Login extends Component {
   }
 
   render() {
+    const user = localStorage.getItem('userToken');
     return (
-      <div className="container login-form">
-        <div>
-          {this.renderAlert()}
-          <Form onSubmit={e => this.handleSubmit(e)}>
-            <h2>
-              <span className="login">Đăng Nhập</span>
-            </h2>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                id="exampleEmail"
-                name="email"
-                type="email"
-                placeholder="Địa chỉ email"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Mật khẩu</Label>
-              <Input
-                id="examplePassword"
-                name="password"
-                type="password"
-                placeholder="Mật khẩu"
-              />
-            </FormGroup>
-            <div className="ViewProfile">
-              <Button variant="primary" type="submit">
-                Đăng nhập
-              </Button>
+      <>
+        {!user ? (
+          <div className="container login-form">
+            <div>
+              {this.renderAlert()}
+              <Form onSubmit={e => this.handleSubmit(e)}>
+                <h2>
+                  <span className="login">Đăng Nhập</span>
+                </h2>
+                <FormGroup>
+                  <Label>Email</Label>
+                  <Input
+                    id="exampleEmail"
+                    name="email"
+                    type="email"
+                    placeholder="Địa chỉ email"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Mật khẩu</Label>
+                  <Input
+                    id="examplePassword"
+                    name="password"
+                    type="password"
+                    placeholder="Mật khẩu"
+                  />
+                </FormGroup>
+                <div className="ViewProfile">
+                  <Button variant="primary" type="submit">
+                    Đăng nhập
+                  </Button>
+                </div>
+              </Form>
             </div>
-          </Form>
-        </div>
-        <div className="text-center pt-3">
-          Hoặc đăng nhập bằng tài khoản khác:
-        </div>
+            <div className="text-center pt-3">
+              Hoặc đăng nhập bằng tài khoản khác:
+            </div>
 
-        <div>
-          <p>
-            <FacebookLoginButton />
-          </p>
-          <a>
-            <GoogleLoginButton />
-          </a>
-          <div className="text-center">
-            <a>
-              <Link to="/signup">Tạo tài khoản</Link>
-            </a>
-            <span className="p-2">|</span>
-            <a>Quên mật khẩu?</a>
+            <div>
+              <p>
+                <FacebookLoginButton />
+              </p>
+              <a>
+                <GoogleLoginButton />
+              </a>
+              <div className="text-center">
+                <a>
+                  <Link to="/signup">Tạo tài khoản</Link>
+                </a>
+                <span className="p-2">|</span>
+                <a>Quên mật khẩu?</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        ) : (
+          <div className="container login-form">{this.renderAlert()}</div>
+        )}
+      </>
     );
   }
 }

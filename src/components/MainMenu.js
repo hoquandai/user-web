@@ -11,6 +11,7 @@ class MainMenu extends Component {
     localStorage.clear();
     const { logOut } = this.props;
     logOut();
+    window.location.reload();
   };
 
   // componentDidMount() {

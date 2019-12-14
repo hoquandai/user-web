@@ -81,7 +81,7 @@ class DetailTutor extends Component {
               {/* .instructor-short-info */}
             </div>
             {/* .instructors-info */}
-            <div className="buy-course ml-5 mt-3">
+            <div className="buy-course ml-5 mt-3 mb-2">
               <a className="btn">Thuê</a>
             </div>
           </div>
