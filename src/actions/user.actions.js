@@ -74,6 +74,7 @@ export const callAPILogin = (email, password) => {
           dispatch(getUser(response));
         } else {
           dispatch(loginFailed(response.message));
+          window.location.href = '/login';
         }
       });
   };
@@ -143,5 +144,7 @@ export const changePassword = (email, password) => {
 
 export const actionslogOut = () => ({
   type: 'LOGOUT',
-  payload: {}
+  payload: {
+    user: null
+  }
 });

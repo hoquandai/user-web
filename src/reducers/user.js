@@ -5,7 +5,9 @@ const user = (state = {}, action) => {
     case 'LOGIN_FAILED':
       return { message: action.payload.message };
     case 'LOGOUT':
-      return {};
+      return {
+        user: null
+      };
     default:
       return state;
   }
