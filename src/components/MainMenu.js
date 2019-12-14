@@ -125,7 +125,7 @@ class MainMenu extends Component {
                   </div>
                 </div>
 
-                <div className="col-3 col-lg-9 flex justify-content-end align-content-center">
+                <div className="col-3 col-lg-9 justify-content-end align-content-center">
                   <Nav className="site-navigation flex justify-content-end align-items-center">
                     <ul className="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
                       <li className="current-menu-item">

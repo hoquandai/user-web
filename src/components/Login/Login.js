@@ -7,7 +7,7 @@ import {
   GoogleLoginButton
 } from 'react-social-login-buttons';
 // import fire from '../../config/firebase';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -66,7 +66,7 @@ class Login extends Component {
   renderAlert() {
     const { kindAlert, message } = this.state;
     const { user } = this.props;
-    if (sessionStorage.getItem('userToken')) {
+    if (localStorage.getItem('userToken')) {
       return <AlertForm kindAlert="success" message="Đăng nhập thành công." />;
     }
     if (Object.keys(user).length === 1) {
@@ -76,8 +76,11 @@ class Login extends Component {
   }
 
   render() {
+    const { user } = this.props;
+    console.log(user);
     return (
       <div className="container login-form">
+        {!user ? <Redirect to="/" /> : <Redirect to="/login" />}
         <div>
           {this.renderAlert()}
           <Form onSubmit={e => this.handleSubmit(e)}>
@@ -112,7 +115,6 @@ class Login extends Component {
         <div className="text-center pt-3">
           Hoặc đăng nhập bằng tài khoản khác:
         </div>
-
         <div>
           <p>
             <FacebookLoginButton />
