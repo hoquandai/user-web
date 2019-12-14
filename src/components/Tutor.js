@@ -16,61 +16,92 @@ class Tutor extends React.Component {
   };
 
   render() {
+    const { user, page } = this.props;
+    const mapSkillTag = user.attributes.skills.map(skill => {
+      return (
+        <li>
+          <a>{skill.name}</a>
+        </li>
+      );
+    });
+
     return (
-      <div className="col-12 col-md-6 col-lg-4 px-25">
-        <div className="course-content">
-          <figure className="course-thumbnail">
-            <a>
-              <img src="images/1.jpg" alt=""></img>
-            </a>
-          </figure>
+      <>
+        <div
+          className={`col-12 col-md-6 px-25 ${
+            page === 'home' ? 'col-lg-4' : null
+          }`}
+        >
+          <div className="course-content">
+            <figure className="course-thumbnail">
+              <a>
+                <img src="images/1.jpg" alt=""></img>
+              </a>
+            </figure>
 
-          <div className="course-content-wrap">
-            <header className="entry-header">
-              <div className="entry-meta flex align-items-center">
-                <div className="course-author">
-                  <a>
-                    <Link to="/detailTutor">
-                      {this.props.user.attributes.name}
-                    </Link>
-                  </a>
+            <div className="course-content-wrap">
+              <header className="entry-header">
+                <div className="entry-meta flex align-items-center">
+                  <div className="course-author">
+                    <a>
+                      <Link to="/detailTutor">
+                        {user.attributes.name
+                          ? user.attributes.name
+                          : 'Chưa cập nhập'}
+                      </Link>
+                    </a>
+                  </div>
+
+                  <div />
                 </div>
+                <h2 className="entry-title">
+                  <a>Nhiệt tình, và thân thiện với học sinh</a>
+                </h2>
+              </header>
 
-                <div />
+              <p className="address">
+                Địa Chỉ:{' '}
+                <span>
+                  {user.attributes.city
+                    ? user.attributes.city
+                    : 'Chưa cập nhập'}
+                </span>
+              </p>
+
+              <div class="Skill-tags border-top">
+                <ul class="flex flex-wrap align-items-center p-0 m-0 mt-2">
+                  {mapSkillTag}
+                </ul>
               </div>
-              <h2 className="entry-title">
-                <a>Nhiệt tình, và thân thiện với học sinh</a>
-              </h2>
-            </header>
 
-            <p className="address">
-              Địa Chỉ: <span>{this.props.user.attributes.city}</span>
-            </p>
+              <footer className="entry-footer flex justify-content-between align-items-center">
+                {user.attributes.price ? (
+                  <div className="course-cost">
+                    {user.attributes.price
+                      ? user.attributes.price
+                      : 'Chưa cập nhập'}{' '}
+                    VND/h
+                  </div>
+                ) : null}
 
-            <footer className="entry-footer flex justify-content-between align-items-center">
-              {this.props.user.attributes.price ? (
-                <div className="course-cost">
-                  {this.props.user.attributes.price} VND/h
+                <div className="course-ratings flex justify-content-end align-items-center">
+                  <span className="fa fa-star checked" />
+                  <span className="fa fa-star checked" />
+                  <span className="fa fa-star checked" />
+                  <span className="fa fa-star checked" />
+                  <span className="fa fa-star-o" />
+
+                  <span className="course-ratings-count">(4 votes)</span>
                 </div>
-              ) : null}
+              </footer>
 
-              <div className="course-ratings flex justify-content-end align-items-center">
-                <span className="fa fa-star checked" />
-                <span className="fa fa-star checked" />
-                <span className="fa fa-star checked" />
-                <span className="fa fa-star checked" />
-                <span className="fa fa-star-o" />
-
-                <span className="course-ratings-count">(4 votes)</span>
+              <div className="ViewProfile">
+                <Button onClick={this.handleViewProfile}>Chi Tiết</Button>
               </div>
-            </footer>
-
-            <div className="ViewProfile">
-              <Button onClick={this.handleViewProfile}>Chi Tiết</Button>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

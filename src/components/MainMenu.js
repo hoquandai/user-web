@@ -5,12 +5,16 @@ import { Form, Nav, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
 // import fire from '../config/firebase';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 class MainMenu extends Component {
   handleLogout = () => {
     localStorage.clear();
     const { logOut } = this.props;
     logOut();
+    history.push('/');
     window.location.reload();
   };
 
@@ -130,18 +134,18 @@ class MainMenu extends Component {
                   <Nav className="site-navigation flex justify-content-end align-items-center">
                     <ul className="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
                       <li className="current-menu-item">
-                        <Link to="/"> Home</Link>
+                        <Link to="/"> Trang Chủ</Link>
                       </li>
                       {localStorage.getItem('user') ? (
                         <li>
-                          <Link to="/profile">Profile</Link>
+                          <Link to="/profile">Hồ Sơ</Link>
                         </li>
                       ) : null}
                       <li>
                         <a>blog</a>
                       </li>
                       <li>
-                        <a>Contact</a>
+                        <a>Liên Hệ</a>
                       </li>
                     </ul>
 

@@ -6,7 +6,7 @@ const user = (state = {}, action) => {
       return { message: action.payload.message };
     case 'LOGOUT':
       return {
-        user: null
+        user: action.payload.user
       };
     default:
       return state;

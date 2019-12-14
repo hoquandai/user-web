@@ -2783,3 +2783,32 @@ p.footer-copyright {
   margin-left: 35px;
   list-style: none;
 }
+
+.Skill-tags h2 {
+  color: #19c880;
+  margin-bottom: 16px;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.Skill-tags ul {
+  list-style: none;
+}
+
+.Skill-tags li a {
+  background-color: #c0c0c0;
+  display: block;
+  padding: 8px 14px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ebebeb;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #595959;
+  text-decoration: none;
+}
+
+.Skill-tags li a:hover {
+  color: #383749;
+}

@@ -7,6 +7,7 @@ import Home from '../components/Home';
 import DetailTutor from './DetailTutor';
 import Footer from '../components/Footer';
 import Profile from './Profile';
+import ViewALlTuTor from '../components/ViewAllTutor';
 
 class Container extends React.Component {
   PrivateRoute = ({ children }) => {
@@ -45,6 +46,9 @@ class Container extends React.Component {
           </Route>
           <Route path="/detailTutor">
             <DetailTutor />
+          </Route>
+          <Route path="/viewAllTutor">
+            <ViewALlTuTor />
           </Route>
           <this.PrivateRoute path="/profile">
             <Profile />

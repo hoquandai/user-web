@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import MainMenu from '../components/MainMenu';
 
-import { actionslogOut } from '../actions/user.actions';
+import { actionslogOut } from '../actions';
 
 const mapStateToProps = state => ({
   user: state.user

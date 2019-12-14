@@ -7,7 +7,7 @@ import {
   GoogleLoginButton
 } from 'react-social-login-buttons';
 // import fire from '../../config/firebase';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -69,7 +69,7 @@ class Login extends Component {
     if (localStorage.getItem('userToken')) {
       return <AlertForm kindAlert="success" message="Đăng nhập thành công." />;
     }
-    if (Object.keys(user).length === 1) {
+    if (Object.keys(user).length === 1 && kindAlert !== 'missFill') {
       return <AlertForm kindAlert="failed" message={user.message} />;
     }
     return <AlertForm kindAlert={kindAlert} message={message} />;
@@ -79,7 +79,9 @@ class Login extends Component {
     const user = localStorage.getItem('userToken');
     return (
       <>
-        {!user ? (
+        {user ? (
+          <Redirect to="/" />
+        ) : (
           <div className="container login-form">
             <div>
               {this.renderAlert()}
@@ -132,8 +134,6 @@ class Login extends Component {
               </div>
             </div>
           </div>
-        ) : (
-          <div className="container login-form">{this.renderAlert()}</div>
         )}
       </>
     );

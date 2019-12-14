@@ -74,7 +74,7 @@ export const callAPILogin = (email, password) => {
           dispatch(getUser(response));
         } else {
           dispatch(loginFailed(response.message));
-          window.location.href = '/login';
+          // window.location.href = '/login';
         }
       });
   };

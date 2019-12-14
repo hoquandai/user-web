@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
 import { Nav } from 'reactstrap';
 import Tutor from './Tutor';
+import { Link } from 'react-router-dom';
 
 function compare(a, b) {
   if (a.attributes.price > b.attributes.price) {
@@ -30,7 +31,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 25000
+            price: 25000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         },
         {
@@ -43,7 +63,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 30000
+            price: 30000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         },
         {
@@ -56,7 +95,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 40000
+            price: 40000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         },
         {
@@ -69,7 +127,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 50000
+            price: 50000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         },
         {
@@ -82,7 +159,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 15000
+            price: 15000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         },
         {
@@ -95,7 +191,26 @@ class Home extends Component {
             gender: 'male',
             phone: '033444987',
             city: 'HCM',
-            price: 20000
+            price: 20000,
+            skills: [
+              {
+                id: 1,
+                name: 'Math',
+                desc: 'Math skills',
+                created_at: '2019-12-09T16:37:27.385Z',
+                updated_at: '2019-12-09T16:37:27.385Z',
+                user_id: 1
+              },
+
+              {
+                id: 2,
+                name: 'Physic',
+                desc: 'Physic skills',
+                created_at: '2019-12-09T16:37:27.391Z',
+                updated_at: '2019-12-09T16:37:27.391Z',
+                user_id: 2
+              }
+            ]
           }
         }
       ]
@@ -118,7 +233,9 @@ class Home extends Component {
 
   render() {
     const { listUser } = this.state;
-    const mapListUser = listUser.map(user => <Tutor user={user}></Tutor>);
+    const mapListUser = listUser.map(user => (
+      <Tutor page="home" user={user}></Tutor>
+    ));
     return (
       <div>
         <section className="about-section">
@@ -176,23 +293,6 @@ class Home extends Component {
                 <header className="heading flex flex-wrap justify-content-between align-items-center">
                   <h2 className="entry-title">Gia Sư Nổi Bật</h2>
                   <Nav className="courses-menu mt-3 mt-lg-0">
-                    <ul className="flex flex-wrap justify-content-md-end align-items-center">
-                      <li className="active">
-                        <a>Tất Cả</a>
-                      </li>
-                      <li>
-                        <a>Toán</a>
-                      </li>
-                      <li>
-                        <a>Lý</a>
-                      </li>
-                      <li>
-                        <a>Hóa</a>
-                      </li>
-                      <li>
-                        <a>Sinh</a>
-                      </li>
-                    </ul>
                     <select
                       className="selectPrice"
                       id="price"
@@ -210,7 +310,9 @@ class Home extends Component {
               {/* .col */}
               {mapListUser}
               <div className="col-12 px-25 flex justify-content-center">
-                <a className="btn">Xem tất cả</a>
+                <a className="btn">
+                  <Link to="/viewAllTutor">Xem Tất Cả</Link>
+                </a>
               </div>{' '}
               {/* .col */}
             </div>{' '}
