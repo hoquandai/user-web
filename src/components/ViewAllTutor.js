@@ -2,10 +2,18 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
-// import { Nav } from 'reactstrap';
-import Tutor from './Tutor';
+import Tutor from '../container/Tutor';
 
 function compare(a, b) {
+  if (!a.attributes.price && b.attributes.price) {
+    return -1;
+  }
+  if (!b.attributes.price && a.attributes.price) {
+    return 1;
+  }
+  if (!b.attributes.price && !a.attributes.price) {
+    return 0;
+  }
   if (a.attributes.price > b.attributes.price) {
     return 1;
   }
@@ -25,6 +33,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'Ho Quan Dai',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'hoquandai@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -57,6 +66,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'Nhật Tiến',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -89,6 +99,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'abc',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -121,6 +132,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'xyz',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -153,6 +165,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'dfs',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -185,6 +198,7 @@ class ViewAllTuTor extends React.Component {
           type: 'user',
           attributes: {
             name: 'kjmdf',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -213,6 +227,7 @@ class ViewAllTuTor extends React.Component {
           }
         }
       ],
+
       listSkill: [
         {
           id: '1',

@@ -57,7 +57,6 @@ class Signup extends Component {
     const passwordConfirm = e.target.examplePasswordConfirm.value;
     // const { email, password, passwordConfirm } = this.state;
     let res = true;
-
     if (!email || !password || !passwordConfirm) {
       this.setState({
         kindAlert: 'missFill'
@@ -72,7 +71,12 @@ class Signup extends Component {
       return;
     }
 
-    fetch('https://btcn6.herokuapp.com/users/register', {
+    const user = {
+      email: email,
+      password : password
+    }
+
+    fetch('https://stormy-ridge-33799.herokuapp.com/users', {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -80,8 +84,7 @@ class Signup extends Component {
       },
 
       body: JSON.stringify({
-        email,
-        password
+        user
       })
     })
       .then(response => {

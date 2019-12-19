@@ -8,6 +8,8 @@ import DetailTutor from './DetailTutor';
 import Footer from '../components/Footer';
 import Profile from './Profile';
 import ViewALlTuTor from '../components/ViewAllTutor';
+import ListRequestOfTutor from '../components/ListRequestOfTutor';
+import DetailRequestOfTutor from '../components/DetailRequestOfTutor';
 
 class Container extends React.Component {
   PrivateRoute = ({ children }) => {
@@ -50,6 +52,12 @@ class Container extends React.Component {
           <Route path="/viewAllTutor">
             <ViewALlTuTor />
           </Route>
+          <this.PrivateRoute path="/listRequest">
+            <ListRequestOfTutor />
+          </this.PrivateRoute>
+          <this.PrivateRoute path="/detailRequestOfTutor">
+            <DetailRequestOfTutor />
+          </this.PrivateRoute>
           <this.PrivateRoute path="/profile">
             <Profile />
           </this.PrivateRoute>

@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch';
 
 export const receiveUser = user => ({
-  type: 'GET_USER',
+  type: 'RECEIVE_USER',
   payload: {
     user
   }
@@ -148,3 +148,34 @@ export const actionslogOut = () => ({
     user: null
   }
 });
+
+export const receiveDetailTutor = detailTutor => ({
+  type: 'GET_DETAIL',
+  payload: {
+    detailTutor
+  }
+});
+
+export const getDetailTutor = idTutor => {
+  let res = true;
+  return dispatch => {
+    fetch('https://stormy-ridge-33799.herokuapp.com/tutors/' + idTutor, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          dispatch(receiveDetailTutor(response.data));
+        }
+      });
+  };
+};

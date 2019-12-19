@@ -137,12 +137,17 @@ class MainMenu extends Component {
                         <Link to="/"> Trang Chủ</Link>
                       </li>
                       {localStorage.getItem('user') ? (
-                        <li>
-                          <Link to="/profile">Hồ Sơ</Link>
-                        </li>
+                        <>
+                          <li>
+                            <Link to="/profile">Hồ Sơ</Link>
+                          </li>
+                          <li>
+                            <Link to="/listRequest">Yêu cầu</Link>
+                          </li>
+                        </>
                       ) : null}
                       <li>
-                        <a>blog</a>
+                        <Link to="/viewAllTutor"> Gia sư</Link>
                       </li>
                       <li>
                         <a>Liên Hệ</a>

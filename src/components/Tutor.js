@@ -1,7 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import { Button } from 'reactstrap';
@@ -11,6 +10,8 @@ const history = createBrowserHistory();
 
 class Tutor extends React.Component {
   handleViewProfile = () => {
+    // const { getDetailTutor, user } = this.props;
+    // getDetailTutor(user.id);
     history.push('/detailTutor');
     window.location.reload();
   };
@@ -35,7 +36,17 @@ class Tutor extends React.Component {
           <div className="course-content">
             <figure className="course-thumbnail">
               <a>
-                <img src="images/1.jpg" alt=""></img>
+                <img
+                  src={
+                    user.attributes.image
+                      ? 'https://stormy-ridge-33799.herokuapp.com/' +
+                        user.attributes.image
+                      : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                  }
+                  alt=""
+                  height="200"
+                  width="197.75"
+                ></img>
               </a>
             </figure>
 
@@ -44,11 +55,9 @@ class Tutor extends React.Component {
                 <div className="entry-meta flex align-items-center">
                   <div className="course-author">
                     <a>
-                      <Link to="/detailTutor">
-                        {user.attributes.name
-                          ? user.attributes.name
-                          : 'Chưa cập nhập'}
-                      </Link>
+                      {user.attributes.name
+                        ? user.attributes.name
+                        : 'Chưa cập nhập'}
                     </a>
                   </div>
 

@@ -2,30 +2,32 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
-import { Nav } from 'reactstrap';
-import Tutor from './Tutor';
+import Tutor from '../container/Tutor';
 import { Link } from 'react-router-dom';
-
-function compare(a, b) {
-  if (a.attributes.price > b.attributes.price) {
-    return 1;
-  }
-  if (a.attributes.price < b.attributes.price) {
-    return -1;
-  }
-  return 0;
-}
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      listUser: []
+    };
+  }
+
+  componentDidMount() {
+    // const { getListOutStandingTutor } = this.props;
+    // getListOutStandingTutor((res) => {
+    //   this.setState({
+    //     listOutStandingTutor: res.data
+    //   })
+    // })
+    this.setState({
       listUser: [
         {
           id: '1',
           type: 'user',
           attributes: {
             name: 'Ho Quan Dai',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'hoquandai@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -58,6 +60,7 @@ class Home extends Component {
           type: 'user',
           attributes: {
             name: 'Nhật Tiến',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -90,6 +93,7 @@ class Home extends Component {
           type: 'user',
           attributes: {
             name: 'abc',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -122,6 +126,7 @@ class Home extends Component {
           type: 'user',
           attributes: {
             name: 'xyz',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -154,6 +159,7 @@ class Home extends Component {
           type: 'user',
           attributes: {
             name: 'dfs',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -186,6 +192,7 @@ class Home extends Component {
           type: 'user',
           attributes: {
             name: 'kjmdf',
+            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
             email: 'nhattien@example.com',
             dob: '1998-08-08T00:00:00.000Z',
             gender: 'male',
@@ -214,21 +221,7 @@ class Home extends Component {
           }
         }
       ]
-    };
-    this.handleSort = this.handleSort.bind(this);
-  }
-
-  handleSort(e) {
-    if (e.target.value === 'Giá Tăng') {
-      this.setState({
-        listUser: this.state.listUser.sort(compare)
-      });
-    }
-    if (e.target.value === 'Giá Giảm') {
-      this.setState({
-        listUser: this.state.listUser.sort(compare).reverse()
-      });
-    }
+    });
   }
 
   render() {
@@ -292,17 +285,7 @@ class Home extends Component {
               <div className="col-12 px-25">
                 <header className="heading flex flex-wrap justify-content-between align-items-center">
                   <h2 className="entry-title">Gia Sư Nổi Bật</h2>
-                  <Nav className="courses-menu mt-3 mt-lg-0">
-                    <select
-                      className="selectPrice"
-                      id="price"
-                      onChange={this.handleSort}
-                    >
-                      <option value=""> Theo Giá </option>
-                      <option value="Giá Tăng">Giá Tăng</option>
-                      <option value="Giá Giảm"> Giá Giảm </option>
-                    </select>
-                  </Nav>{' '}
+
                   {/* .courses-menu */}
                 </header>{' '}
                 {/* .heading */}

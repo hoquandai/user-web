@@ -2,7 +2,18 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
-import { Form, FormGroup, Button, Input, Label, Alert } from 'reactstrap';
+import {
+  Form,
+  FormGroup,
+  Button,
+  Input,
+  Label,
+  Alert,
+  Media,
+  Badge,
+  Card,
+  Table
+} from 'reactstrap';
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -30,10 +41,29 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       image: 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png',
-      kinAlert: '',
+      kindAlert: '',
       message: '',
-      pKinAlert: '',
-      pMessage: ''
+      pKindAlert: '',
+      pMessage: '',
+      listSkill: [
+        {
+          id: '1',
+          type: 'skill',
+          attributes: {
+            name: 'Math',
+            desc: 'Math skills'
+          }
+        },
+        {
+          id: '2',
+          type: 'skill',
+          attributes: {
+            name: 'Physic',
+            desc: 'Physic skills'
+          }
+        }
+      ],
+      listCheck: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,6 +71,16 @@ class Profile extends React.Component {
     this.handleSubmitChangePassword = this.handleSubmitChangePassword.bind(
       this
     );
+    this.handleSubmitChangeChecbox = this.handleSubmitChangeChecbox.bind(this);
+  }
+
+  componentDidMount() {
+    // const { getListOutStandingTutor } = this.props;
+    // getListOutStandingTutor((res) => {
+    //   this.setState({
+    //     listOutStandingTutor: res.data
+    //   })
+    // })
   }
 
   handleChange(e) {
@@ -54,64 +94,73 @@ class Profile extends React.Component {
   }
 
   handleSubmitChangeInfo = e => {
-    // const userProfile = JSON.parse(localStorage.getItem('user'));
+    // const { getUser } = this.props;
+    // const userProfile = JSON.parse(localStorage.getItem('userToken'));
     // const userName = e.target.exampleName.value;
     // const userAddress = e.target.exampleAddress.value;
-    // const phoneNumber = e.target.examplePhoneNumber.value;
+    // const userPhoneNumber = e.target.examplePhoneNumber.value;
     // const userIntro = e.target.exampleIntro.value;
     // const userPrice = e.target.examplePrice.value;
+    // const userGender = e.target.exampleGender.value;
     // const { image } = this.state;
     // if (
-    //   !userName &&
-    //   !userAddress &&
-    //   !phoneNumber &&
-    //   !userIntro &&
-    //   !userPrice &&
+    //   !userName ||
+    //   !userAddress ||
+    //   !userPhoneNumber ||
+    //   !userIntro ||
+    //   !userPrice ||
+    //   !userGender ||
     //   image !== 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
     // ) {
-    //   userProfile.name = userName;
-    //   userProfile.city = userAddress;
-    //   userProfile.phone = phoneNumber;
-    //   userProfile.intro = userIntro;
-    //   userProfile.price = userPrice;
-    //   userProfile.image = image;
-    //   let res = true;
-    //   fetch(
-    //     'https://stormy-ridge-33799.herokuapp.com/users/' + userProfile.id,
-    //     {
-    //       method: 'post',
-    //       headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify({
-    //         token: localStorage.getItem('userToken'),
-    //         user: userProfile
-    //       })
-    //     }
-    //   )
-    //     .then(response => {
-    //       if (response.status !== 200) {
-    //         res = false;
-    //       }
-    //       return response.json();
-    //     })
-    //     .then(response => {
-    //       if (res) {
-    //         localStorage.setItem('user', JSON.stringify(userProfile));
-    //         this.setState({
-    //           kinAlert: 'success',
-    //           message: res.message
-    //         });
-    //       } else {
-    //         this.setState({
-    //           kinAlert: 'failed',
-    //           message: res.message
-    //         });
-    //       }
-    //     });
+    //   this.setState({
+    //     kinAlert: 'missFill'
+    //   });
+    //   return;
     // }
-    // return;
+    // const userUpdate = {
+    //   name: userName,
+    //   city: userAddress,
+    //   gender: userGender,
+    //   phone: userPhoneNumber,
+    //   intro: userIntro,
+    //   price: userPrice,
+    //   image: image
+    // };
+    // let res = true;
+    // fetch(
+    //   'https://stormy-ridge-33799.herokuapp.com/users/' + userProfile.user_id,
+    //   {
+    //     method: '+',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       token: userProfile.token,
+    //       user: userUpdate
+    //     })
+    //   }
+    // )
+    //   .then(response => {
+    //     if (response.status !== 200) {
+    //       res = false;
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(response => {
+    //     if (res) {
+    //       this.setState({
+    //         kinAlert: 'success',
+    //         message: res.message
+    //       });
+    //       getUser(userProfile);
+    //     } else {
+    //       this.setState({
+    //         kinAlert: 'failed',
+    //         message: res.message
+    //       });
+    //     }
+    //   });
   };
 
   //fetAPI changePassword
@@ -121,19 +170,41 @@ class Profile extends React.Component {
     // const confirmPassword = e.target.exampleComfirmNewPassword.value;
   }
 
+  handleSubmitChangeChecbox(e) {}
+
   renderAlert() {
-    const { kinAlert, message } = this.state;
-    return <AlertForm kinAlert={kinAlert} message={message}></AlertForm>;
+    const { kindAlert, message } = this.state;
+    return (
+      <AlertForm
+        kindAlert={kindAlert}
+        message={message ? message : 'none'}
+      ></AlertForm>
+    );
   }
 
   renderAlertChangePassword() {
-    const { pKinAlert, pMessage } = this.state;
-    return <AlertForm kinAlert={pKinAlert} message={pMessage}></AlertForm>;
+    const { pKindAlert, pMessage } = this.state;
+    return <AlertForm kindAlert={pKindAlert} message={pMessage}></AlertForm>;
   }
 
   render() {
     const userProfile = JSON.parse(localStorage.getItem('user'));
-    const { image } = this.state;
+    const { image, listSkill } = this.state;
+    const mapListSkill = listSkill.map(Skill => {
+      return (
+        <FormGroup check>
+          <Label check>
+            <Input
+              id={Skill.id}
+              // checked={}
+              onClick={e => this.handleSubmitChangeChecbox(e)}
+              type="checkbox"
+            />{' '}
+            {Skill.attributes.name}
+          </Label>
+        </FormGroup>
+      );
+    });
     return (
       <div className="container">
         <div class="container instructors-info ml-5">
@@ -149,7 +220,8 @@ class Profile extends React.Component {
                   src={
                     userProfile.attributes.image &&
                     image === 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
-                      ? userProfile.attributes.image
+                      ? 'https://stormy-ridge-33799.herokuapp.com/' +
+                        userProfile.attributes.image
                       : image
                   }
                   class=" rounded-circle"
@@ -170,8 +242,9 @@ class Profile extends React.Component {
             {/* edit form column */}
             <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
               {/* Hiển thị alert ở đây */}
-              {this.renderAlert}
+
               <Form onSubmit={e => this.handleSubmitChangeInfo(e)}>
+                {this.renderAlert()}
                 <FormGroup>
                   <Label className="col-lg-3">Họ Tên</Label>
                   <Input
@@ -197,6 +270,20 @@ class Profile extends React.Component {
                     }
                   />
                 </FormGroup>
+
+                <FormGroup>
+                  <Label className="col-lg-3">Giới tính</Label>
+                  <Input
+                    name="userGender"
+                    id="exampleGender"
+                    placeholder={
+                      userProfile.attributes.gender
+                        ? userProfile.attributes.gender
+                        : null
+                    }
+                  />
+                </FormGroup>
+
                 <FormGroup>
                   <Label className="col-lg-3">Số điện thoại</Label>
                   <Input
@@ -250,7 +337,7 @@ class Profile extends React.Component {
           <header class="entry-heading">
             <h2 class="entry-title">Mật khẩu</h2>
           </header>
-          {this.renderAlertChangePassword}
+          {this.renderAlertChangePassword()}
           <Form onSubmit={e => this.handleSubmitChangePassword(e)}>
             <FormGroup>
               <Label className="col-lg-3">Mật khẩu</Label>
@@ -276,6 +363,83 @@ class Profile extends React.Component {
           <header class="entry-heading">
             <h2 class="entry-title">Danh sách kỹ năng</h2>
           </header>
+          <Form>
+            <FormGroup tag="fieldset">{mapListSkill}</FormGroup>
+            <FormGroup check>
+              <Input type="checkbox" checked="true" />
+              <Label>Check me</Label>
+            </FormGroup>
+            <div className="ViewProfile">
+              <Button variant="primary" type="submit">
+                Cập Nhập
+              </Button>
+            </div>
+          </Form>
+        </div>
+        <div className="container instructors-info ml-5">
+          <header class="entry-heading">
+            <h2 class="entry-title">Lịch sử dạy</h2>
+          </header>
+          <Card className="mt-4">
+            <Table className="align-items-center table-flush" responsive>
+              <thead className="thead-light">
+                <tr>
+                  <th scope="col">Người Thuê</th>
+                  <th scope="col">Lớp</th>
+                  <th scope="col">Môn học</th>
+                  <th scope="col">Lịch</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    <Media className="align-items-center">
+                      <a
+                        className="avatar rounded-circle mr-3"
+                        href="#pablo"
+                        onClick={e => e.preventDefault()}
+                      >
+                        <img
+                          alt="avatar"
+                          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQkwDf1RrSeDg0q4-1oBeo6MA8XgeGnd_SAjk9Ew_gx4Tw&_nc_ht=scontent.fsgn5-3.fna&oh=41eee2b569203717d343b9da007cc565&oe=5EAF7B12"
+                        />
+                      </a>
+                      <Media>
+                        <span className="mb-0 text-sm">
+                          Trương Phạm Nhật Tiến
+                        </span>
+                      </Media>
+                    </Media>
+                  </th>
+                  <td>10</td>
+                  <td>Toán</td>
+                  <td>T2,T3,T5</td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <Media className="align-items-center">
+                      <a
+                        className="avatar rounded-circle mr-3"
+                        href="#pablo"
+                        onClick={e => e.preventDefault()}
+                      >
+                        <img
+                          alt="avatar"
+                          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQkwDf1RrSeDg0q4-1oBeo6MA8XgeGnd_SAjk9Ew_gx4Tw&_nc_ht=scontent.fsgn5-3.fna&oh=41eee2b569203717d343b9da007cc565&oe=5EAF7B12"
+                        />
+                      </a>
+                      <Media>
+                        <span className="mb-0 text-sm">Nguyễn Hữu Tú</span>
+                      </Media>
+                    </Media>
+                  </th>
+                  <td>10</td>
+                  <td>Toán</td>
+                  <td>T2,T3,T5</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Card>
         </div>
       </div>
     );

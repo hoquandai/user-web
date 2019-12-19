@@ -1,6 +1,6 @@
 const user = (state = {}, action) => {
   switch (action.type) {
-    case 'GET_USER':
+    case 'RECEIVE_USER':
       return action.payload.user;
     case 'LOGIN_FAILED':
       return { message: action.payload.message };

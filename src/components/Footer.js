@@ -7,7 +7,7 @@ class Footer extends Component {
   render() {
     return (
       <>
-        <footer className="site-footer border-top">
+        <footer className="site-footer border-top mt-5">
           <div className="footer-widgets">
             <div className="container">
               <div className="row">
