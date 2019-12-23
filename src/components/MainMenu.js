@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Nav, Button } from 'reactstrap';
+import { Form, Nav, Button, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
 // import fire from '../config/firebase';
@@ -115,7 +115,7 @@ class MainMenu extends Component {
 
                   <div className="header-bar-search">
                     <Form className="flex align-items-stretch">
-                      <input
+                      <Input
                         type="search"
                         placeholder="Bạn đang tìm một gia sư?"
                       />

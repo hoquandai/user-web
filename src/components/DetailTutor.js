@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable array-callback-return */
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
@@ -13,42 +14,31 @@ import {
   Label,
   Input
 } from 'reactstrap';
+import fetch from 'cross-fetch';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 class DetailTutor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       detailTutor: {
-        id: '1',
-        type: 'user',
+        id: '',
+        type: '',
         attributes: {
-          name: 'Ho Quan Dai',
-          email: 'hoquandai@example.com',
-          dob: '1998-08-08T00:00:00.000Z',
-          gender: 'male',
-          phone: '033444987',
-          city: 'HCM',
-          price: 25000,
-          skills: [
-            {
-              id: 1,
-              name: 'Math',
-              desc: 'Math skills',
-              created_at: '2019-12-09T16:37:27.385Z',
-              updated_at: '2019-12-09T16:37:27.385Z',
-              user_id: 1
-            },
-            {
-              id: 2,
-              name: 'Physic',
-              desc: 'Physic skills',
-              created_at: '2019-12-09T16:37:27.391Z',
-              updated_at: '2019-12-09T16:37:27.391Z',
-              user_id: 2
-            }
-          ]
+          name: '',
+          email: '',
+          dob: '',
+          gender: '',
+          phone: '',
+          city: '',
+          price: '',
+          desc: '',
+          skills: []
         }
       },
+      listSkill: [],
       modal: false,
 
       timeHire: '',
@@ -60,7 +50,64 @@ class DetailTutor extends Component {
     this.handeChangeTimeHire = this.handeChangeTimeHire.bind(this);
   }
 
+  componentDidMount() {
+    const userID = window.location.pathname.split('id:')[1];
+    // const token = JSON.parse(localStorage.getItem('userToken')).token;
+
+    let res = true;
+
+    fetch('https://stormy-ridge-33799.herokuapp.com/users/' + userID, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            detailTutor: response.data
+          });
+        }
+        res = true;
+      });
+
+    fetch('https://stormy-ridge-33799.herokuapp.com/skills', {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            listSkill: response.data
+          });
+        }
+        res = true;
+      });
+  }
+
   toggle() {
+    const userProfile = JSON.parse(localStorage.getItem('user'));
+    if (!userProfile) {
+      history.push('/login');
+      window.location.reload();
+      return;
+    }
     this.setState({
       modal: !this.state.modal
     });
@@ -77,15 +124,36 @@ class DetailTutor extends Component {
 
   handleHireTutor(e) {
     e.preventDefault();
-    // const { DetailTutor } = this.state;
-    // const userProfile = JSON.parse(localStorage.getItem('user'));
-    // const idTutor = DetailTutor.id;
-    // const idStudent = userProfile.id;
-    // const classStudent = e.target.ipClass.value;
-    // const subject = e.target.ipSubjects.value;
-    // const asdress = e.target.ipAddress.value;
-    // const schedule = e.target.ipSchedule.value;
-    // const timeHire = e.target.ipTimeHire.value;
+
+    const { hire } = this.props;
+    const { detailTutor } = this.state;
+    const userProfile = JSON.parse(localStorage.getItem('user'));
+    const idTutor = detailTutor.id;
+    const idStudent = userProfile.id;
+    const classStudent = e.target.ipClass.value;
+    const subject = e.target.ipSubjects.value;
+    const asdress = e.target.ipAddress.value;
+    const schedule = e.target.ipSchedule.value;
+    const timeHire = e.target.ipTimeHire.value;
+
+    if (idStudent === idTutor) {
+      return;
+    }
+
+    var contract = {
+      course: classStudent,
+      subject: subject,
+      addr: asdress,
+      schedule: schedule,
+      time: timeHire,
+      status: 'Đang chờ',
+      paid: false,
+      tutor_id: idTutor,
+      student_id: idStudent
+    };
+
+    hire(contract);
+
     this.setState({
       modal: !this.state.modal
     });
@@ -101,9 +169,13 @@ class DetailTutor extends Component {
 
   render() {
     // const { detailTutor } = this.props;
-    const { detailTutor, timeHire, charge } = this.state;
-    const mapListSkill = detailTutor.attributes.skills.map(skill => {
-      return <li>{skill.name}</li>;
+    const { detailTutor, timeHire, charge, listSkill } = this.state;
+    const mapListSkill = detailTutor.attributes.skills.map(skillOfTutor => {
+      for (var i = 0; i < listSkill.length; i++) {
+        if (skillOfTutor === listSkill[i].id) {
+          return <li>{listSkill[i].attributes.name}</li>;
+        }
+      }
     });
     return (
       <>
@@ -119,7 +191,15 @@ class DetailTutor extends Component {
 
                 <div className="instructor-short-info flex flex-wrap">
                   <div className="instructors-stats">
-                    <img src="images/instructor.jpg" alt="" />
+                    <img
+                      src={
+                        detailTutor.attributes.image
+                          ? 'https://stormy-ridge-33799.herokuapp.com' +
+                            detailTutor.attributes.image
+                          : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                      }
+                      alt=""
+                    />
 
                     <ul className="p-0 m-0 mt-3">
                       <li>
@@ -145,7 +225,7 @@ class DetailTutor extends Component {
                     {/* .course-teacher */}
 
                     <div className="course-teacher mt-3">
-                      Nơi Ở:{' '}
+                      Nơi ở:{' '}
                       {detailTutor.attributes.city ? (
                         <a>{detailTutor.attributes.city}</a>
                       ) : null}
@@ -158,9 +238,9 @@ class DetailTutor extends Component {
                       ) : null}
                     </div>
                     <div className="course-teacher mt-3">
-                      Giá dạy học:{' '}
+                      Giá dạy học (Theo Giờ):{' '}
                       {detailTutor.attributes.price ? (
-                        <a>{detailTutor.attributes.price} VND/h</a>
+                        <a>{detailTutor.attributes.price} VND</a>
                       ) : null}
                     </div>
 

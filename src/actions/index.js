@@ -80,10 +80,10 @@ export const callAPILogin = (email, password) => {
   };
 };
 
-export const changeName = (email, name) => {
+export const changeInfo = (token, id, user) => {
   let res = true;
   return dispatch => {
-    fetch('https://btcn6.herokuapp.com/users/changeName', {
+    fetch('https://stormy-ridge-33799.herokuapp.com/users/' + id, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -91,8 +91,8 @@ export const changeName = (email, name) => {
       },
 
       body: JSON.stringify({
-        email,
-        name
+        token,
+        user
       })
     })
       .then(response => {
@@ -103,40 +103,7 @@ export const changeName = (email, name) => {
       })
       .then(response => {
         if (res) {
-          dispatch(getUser(response));
-        } else {
-          dispatch(loginFailed(response.message));
-        }
-      });
-  };
-};
-
-export const changePassword = (email, password) => {
-  let res = true;
-  return dispatch => {
-    fetch('https://btcn6.herokuapp.com/users/changePassword', {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
-      .then(response => {
-        if (response.status !== 200) {
-          res = false;
-        }
-        return response.json();
-      })
-      .then(response => {
-        if (res) {
-          dispatch(getUser(response));
-        } else {
-          dispatch(loginFailed(response.message));
+          dispatch(getUser({ token: token, user_id: id }));
         }
       });
   };
@@ -175,6 +142,34 @@ export const getDetailTutor = idTutor => {
       .then(response => {
         if (res) {
           dispatch(receiveDetailTutor(response.data));
+        }
+      });
+  };
+};
+
+export const hire = contract => {
+  let res = true;
+  return dispatch => {
+    fetch('https://stormy-ridge-33799.herokuapp.com/contracts', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        contract
+      })
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          console.log('--------oke');
         }
       });
   };

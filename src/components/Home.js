@@ -14,214 +14,28 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // const { getListOutStandingTutor } = this.props;
-    // getListOutStandingTutor((res) => {
-    //   this.setState({
-    //     listOutStandingTutor: res.data
-    //   })
-    // })
-    this.setState({
-      listUser: [
-        {
-          id: '1',
-          type: 'user',
-          attributes: {
-            name: 'Ho Quan Dai',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'hoquandai@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 25000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
-        },
-        {
-          id: '2',
-          type: 'user',
-          attributes: {
-            name: 'Nhật Tiến',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'nhattien@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 30000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
-        },
-        {
-          id: '3',
-          type: 'user',
-          attributes: {
-            name: 'abc',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'nhattien@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 40000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
-        },
-        {
-          id: '4',
-          type: 'user',
-          attributes: {
-            name: 'xyz',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'nhattien@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 50000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
-        },
-        {
-          id: '5',
-          type: 'user',
-          attributes: {
-            name: 'dfs',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'nhattien@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 15000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
-        },
-        {
-          id: '6',
-          type: 'user',
-          attributes: {
-            name: 'kjmdf',
-            image: '/uploads/c0a463163c67a5304fd63f3be1aebef8',
-            email: 'nhattien@example.com',
-            dob: '1998-08-08T00:00:00.000Z',
-            gender: 'male',
-            phone: '033444987',
-            city: 'HCM',
-            price: 20000,
-            skills: [
-              {
-                id: 1,
-                name: 'Math',
-                desc: 'Math skills',
-                created_at: '2019-12-09T16:37:27.385Z',
-                updated_at: '2019-12-09T16:37:27.385Z',
-                user_id: 1
-              },
-
-              {
-                id: 2,
-                name: 'Physic',
-                desc: 'Physic skills',
-                created_at: '2019-12-09T16:37:27.391Z',
-                updated_at: '2019-12-09T16:37:27.391Z',
-                user_id: 2
-              }
-            ]
-          }
+    let res = true;
+    fetch('https://stormy-ridge-33799.herokuapp.com/tutors', {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
         }
-      ]
-    });
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            listUser: response.data
+          });
+        }
+        res = true;
+      });
   }
 
   render() {

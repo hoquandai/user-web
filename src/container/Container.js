@@ -46,7 +46,7 @@ class Container extends React.Component {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/detailTutor">
+          <Route path="/detailTutor/:id">
             <DetailTutor />
           </Route>
           <Route path="/viewAllTutor">
@@ -55,7 +55,7 @@ class Container extends React.Component {
           <this.PrivateRoute path="/listRequest">
             <ListRequestOfTutor />
           </this.PrivateRoute>
-          <this.PrivateRoute path="/detailRequestOfTutor">
+          <this.PrivateRoute path="/detailContract/:id">
             <DetailRequestOfTutor />
           </this.PrivateRoute>
           <this.PrivateRoute path="/profile">

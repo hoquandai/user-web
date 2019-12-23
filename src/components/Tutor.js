@@ -1,5 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable array-callback-return */
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
@@ -9,21 +10,59 @@ import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 
 class Tutor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listSkill: []
+    };
+  }
+
+  componentDidMount() {
+    let res = true;
+    fetch('https://stormy-ridge-33799.herokuapp.com/skills', {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            listSkill: response.data
+          });
+        }
+        res = true;
+      });
+  }
+
   handleViewProfile = () => {
-    // const { getDetailTutor, user } = this.props;
-    // getDetailTutor(user.id);
-    history.push('/detailTutor');
+    const { user } = this.props;
+
+    history.push('/detailTutor/id:' + user.id);
     window.location.reload();
   };
 
   render() {
+    const { listSkill } = this.state;
     const { user, page } = this.props;
+
     const mapSkillTag = user.attributes.skills.map(skill => {
-      return (
-        <li>
-          <a>{skill.name}</a>
-        </li>
-      );
+      for (var i = 0; i < listSkill.length; i++) {
+        if (skill === listSkill[i].id) {
+          return (
+            <li>
+              <a>{listSkill[i].attributes.name}</a>
+            </li>
+          );
+        }
+      }
     });
 
     return (
@@ -39,7 +78,7 @@ class Tutor extends React.Component {
                 <img
                   src={
                     user.attributes.image
-                      ? 'https://stormy-ridge-33799.herokuapp.com/' +
+                      ? 'https://stormy-ridge-33799.herokuapp.com' +
                         user.attributes.image
                       : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
                   }
@@ -63,9 +102,6 @@ class Tutor extends React.Component {
 
                   <div />
                 </div>
-                <h2 className="entry-title">
-                  <a>Nhiệt tình, và thân thiện với học sinh</a>
-                </h2>
               </header>
 
               <p className="address">
@@ -83,16 +119,15 @@ class Tutor extends React.Component {
                 </ul>
               </div>
 
+              {user.attributes.price ? (
+                <div className="course-cost">
+                  {user.attributes.price
+                    ? user.attributes.price
+                    : 'Chưa cập nhập'}{' '}
+                  VND/h
+                </div>
+              ) : null}
               <footer className="entry-footer flex justify-content-between align-items-center">
-                {user.attributes.price ? (
-                  <div className="course-cost">
-                    {user.attributes.price
-                      ? user.attributes.price
-                      : 'Chưa cập nhập'}{' '}
-                    VND/h
-                  </div>
-                ) : null}
-
                 <div className="course-ratings flex justify-content-end align-items-center">
                   <span className="fa fa-star checked" />
                   <span className="fa fa-star checked" />

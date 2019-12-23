@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable array-callback-return */
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Style.css';
@@ -10,10 +11,11 @@ import {
   Label,
   Alert,
   Media,
-  Badge,
   Card,
   Table
 } from 'reactstrap';
+import fetch from 'cross-fetch';
+import { changeInfo } from '../actions';
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -45,33 +47,13 @@ class Profile extends React.Component {
       message: '',
       pKindAlert: '',
       pMessage: '',
-      listSkill: [
-        {
-          id: '1',
-          type: 'skill',
-          attributes: {
-            name: 'Math',
-            desc: 'Math skills'
-          }
-        },
-        {
-          id: '2',
-          type: 'skill',
-          attributes: {
-            name: 'Physic',
-            desc: 'Physic skills'
-          }
-        }
-      ],
+      listSkill: [],
       listCheck: []
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmitChangeInfo = this.handleSubmitChangeInfo.bind(this);
-    this.handleSubmitChangePassword = this.handleSubmitChangePassword.bind(
-      this
-    );
     this.handleSubmitChangeChecbox = this.handleSubmitChangeChecbox.bind(this);
+    this.handleChangeSkill = this.handleChangeSkill.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +63,57 @@ class Profile extends React.Component {
     //     listOutStandingTutor: res.data
     //   })
     // })
+    const userProfile = JSON.parse(localStorage.getItem('user'));
+    if (userProfile.attributes.image) {
+      this.setState({
+        image: userProfile.attributes.image
+      });
+    }
+    let res = true;
+
+    fetch('https://stormy-ridge-33799.herokuapp.com/skills', {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            listSkill: response.data
+          });
+
+          var listCheckTemp = [];
+          response.data.map(Skill => {
+            var b = [
+              { id: Skill.id, isChecked: false, name: Skill.attributes.name }
+            ];
+            listCheckTemp.push(b);
+          });
+
+          response.data.map(Skill => {
+            let i = 0;
+            for (i = 0; i < userProfile.attributes.skills.length; i++) {
+              if (Skill.id === userProfile.attributes.skills[i]) {
+                listCheckTemp[i][0].isChecked = true;
+                break;
+              }
+            }
+          });
+
+          this.setState({
+            listCheck: listCheckTemp
+          });
+        }
+        res = true;
+      });
   }
 
   handleChange(e) {
@@ -94,83 +127,118 @@ class Profile extends React.Component {
   }
 
   handleSubmitChangeInfo = e => {
-    // const { getUser } = this.props;
-    // const userProfile = JSON.parse(localStorage.getItem('userToken'));
-    // const userName = e.target.exampleName.value;
-    // const userAddress = e.target.exampleAddress.value;
-    // const userPhoneNumber = e.target.examplePhoneNumber.value;
-    // const userIntro = e.target.exampleIntro.value;
-    // const userPrice = e.target.examplePrice.value;
-    // const userGender = e.target.exampleGender.value;
-    // const { image } = this.state;
-    // if (
-    //   !userName ||
-    //   !userAddress ||
-    //   !userPhoneNumber ||
-    //   !userIntro ||
-    //   !userPrice ||
-    //   !userGender ||
-    //   image !== 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
-    // ) {
-    //   this.setState({
-    //     kinAlert: 'missFill'
-    //   });
-    //   return;
-    // }
-    // const userUpdate = {
-    //   name: userName,
-    //   city: userAddress,
-    //   gender: userGender,
-    //   phone: userPhoneNumber,
-    //   intro: userIntro,
-    //   price: userPrice,
-    //   image: image
-    // };
-    // let res = true;
-    // fetch(
-    //   'https://stormy-ridge-33799.herokuapp.com/users/' + userProfile.user_id,
-    //   {
-    //     method: '+',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       token: userProfile.token,
-    //       user: userUpdate
-    //     })
-    //   }
-    // )
-    //   .then(response => {
-    //     if (response.status !== 200) {
-    //       res = false;
-    //     }
-    //     return response.json();
-    //   })
-    //   .then(response => {
-    //     if (res) {
-    //       this.setState({
-    //         kinAlert: 'success',
-    //         message: res.message
-    //       });
-    //       getUser(userProfile);
-    //     } else {
-    //       this.setState({
-    //         kinAlert: 'failed',
-    //         message: res.message
-    //       });
-    //     }
-    //   });
+    e.preventDefault();
+    const { changeInfo } = this.props;
+    const userProfile = JSON.parse(localStorage.getItem('userToken'));
+    const userName = e.target.exampleName.value;
+    const userAddress = e.target.exampleAddress.value;
+    const userPhoneNumber = e.target.examplePhoneNumber.value;
+    const userIntro = e.target.exampleIntro.value;
+    const userPrice = e.target.examplePrice.value;
+    const userGender = e.target.exampleGender.value;
+    const { image } = this.state;
+    if (
+      !userName ||
+      !userAddress ||
+      !userPhoneNumber ||
+      !userIntro ||
+      !userPrice ||
+      !userGender ||
+      image === 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+    ) {
+      this.setState({
+        kindAlert: 'missFill'
+      });
+      return;
+    }
+    const userUpdate = {
+      name: userName,
+      city: userAddress,
+      gender: userGender,
+      phone: userPhoneNumber,
+      desc: userIntro,
+      price: userPrice,
+      image_data_uri: image
+    };
+
+    changeInfo(userProfile.token, userProfile.user_id, userUpdate);
+    this.setState({
+      kindAlert: 'success',
+      message: 'Thay đổi thành công'
+    });
   };
 
   //fetAPI changePassword
   handleSubmitChangePassword(e) {
-    // const oldPassword = e.target.exampleOldPassword.value;
-    // const newPassword = e.target.exampleNewPassword.value;
-    // const confirmPassword = e.target.exampleComfirmNewPassword.value;
+    e.preventDefault();
+    const userProfile = JSON.parse(localStorage.getItem('userToken'));
+    const oldPassword = e.target.exampleOldPassword.value;
+    const newPassword = e.target.exampleNewPassword.value;
+    const confirmPassword = e.target.exampleComfirmNewPassword.value;
+
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      this.setState({
+        pKindAlert: 'missFill'
+      });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.setState({
+        pKindAlert: 'failed',
+        message: 'Mật khẩu xác nhận không trùng!'
+      });
+      return;
+    }
+
+    var newUser = {
+      password: newPassword
+    };
+
+    changeInfo(userProfile.token, userProfile.user_id, newUser);
+
+    this.setState({
+      pKindAlert: 'success',
+      pMessage: 'Thay đổi thành công'
+    });
   }
 
-  handleSubmitChangeChecbox(e) {}
+  handleSubmitChangeChecbox(e) {
+    e.preventDefault();
+    const newListCheck = this.state.listCheck;
+    const id = e.target.id;
+
+    for (var i = 0; i < newListCheck.length; i++) {
+      if (newListCheck[i][0].id === id) {
+        newListCheck[i][0].isChecked = !newListCheck[i][0].isChecked;
+        break;
+      }
+    }
+
+    this.setState({
+      listCheck: newListCheck
+    });
+  }
+
+  handleChangeSkill(e) {
+    e.preventDefault();
+    const userProfile = JSON.parse(localStorage.getItem('userToken'));
+    const { changeInfo } = this.props;
+    const { listCheck } = this.state;
+    const listSkillUpdate = [];
+
+    for (var i = 0; i < listCheck.length; i++) {
+      if (listCheck[i][0].isChecked) {
+        listSkillUpdate.push(listCheck[i][0].id);
+      }
+    }
+
+    var newUser = {
+      skills: listSkillUpdate
+    };
+
+    changeInfo(userProfile.token, userProfile.user_id, newUser);
+  }
 
   renderAlert() {
     const { kindAlert, message } = this.state;
@@ -189,18 +257,19 @@ class Profile extends React.Component {
 
   render() {
     const userProfile = JSON.parse(localStorage.getItem('user'));
-    const { image, listSkill } = this.state;
-    const mapListSkill = listSkill.map(Skill => {
+    const { image, listCheck } = this.state;
+    const mapListSkill = listCheck.map(Skill => {
       return (
         <FormGroup check>
           <Label check>
             <Input
-              id={Skill.id}
+              id={Skill[0].id}
               // checked={}
-              onClick={e => this.handleSubmitChangeChecbox(e)}
+              onChange={e => this.handleSubmitChangeChecbox(e)}
               type="checkbox"
+              checked={Skill[0].isChecked}
             />{' '}
-            {Skill.attributes.name}
+            {Skill[0].name}
           </Label>
         </FormGroup>
       );
@@ -218,10 +287,8 @@ class Profile extends React.Component {
                   width="250"
                   height="250"
                   src={
-                    userProfile.attributes.image &&
-                    image === 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
-                      ? 'https://stormy-ridge-33799.herokuapp.com/' +
-                        userProfile.attributes.image
+                    userProfile.attributes.image
+                      ? `https://stormy-ridge-33799.herokuapp.com${userProfile.attributes.image}`
                       : image
                   }
                   class=" rounded-circle"
@@ -298,7 +365,7 @@ class Profile extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label className="col-lg-3">Giá dạy học</Label>
+                  <Label className="col-lg-4">Giá dạy học (Theo Giờ)</Label>
                   <Input
                     type="number"
                     name="Price"
@@ -313,12 +380,13 @@ class Profile extends React.Component {
                 <FormGroup>
                   <Label for="exampleText">Tự Giới Thiệu</Label>
                   <Input
+                    style={{ height: '200px' }}
                     type="textarea"
                     name="text"
                     id="exampleIntro"
                     placeholder={
-                      userProfile.attributes.intro
-                        ? userProfile.attributes.intro
+                      userProfile.attributes.desc
+                        ? userProfile.attributes.desc
                         : null
                     }
                   />
@@ -365,12 +433,11 @@ class Profile extends React.Component {
           </header>
           <Form>
             <FormGroup tag="fieldset">{mapListSkill}</FormGroup>
-            <FormGroup check>
-              <Input type="checkbox" checked="true" />
-              <Label>Check me</Label>
-            </FormGroup>
             <div className="ViewProfile">
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                onClick={e => this.handleChangeSkill(e)}
+              >
                 Cập Nhập
               </Button>
             </div>
