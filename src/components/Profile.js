@@ -15,7 +15,6 @@ import {
   Table
 } from 'reactstrap';
 import fetch from 'cross-fetch';
-import { changeInfo } from '../actions';
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -175,6 +174,7 @@ class Profile extends React.Component {
     const oldPassword = e.target.exampleOldPassword.value;
     const newPassword = e.target.exampleNewPassword.value;
     const confirmPassword = e.target.exampleComfirmNewPassword.value;
+    const { changeInfo } = this.props;
 
     if (!oldPassword || !newPassword || !confirmPassword) {
       this.setState({
@@ -287,7 +287,9 @@ class Profile extends React.Component {
                   width="250"
                   height="250"
                   src={
-                    userProfile.attributes.image
+                    userProfile.attributes.image &&
+                    !image ===
+                      'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
                       ? `https://stormy-ridge-33799.herokuapp.com${userProfile.attributes.image}`
                       : image
                   }

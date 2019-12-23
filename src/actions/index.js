@@ -174,3 +174,31 @@ export const hire = contract => {
       });
   };
 };
+
+export const updateContract = (token, idContract, contract) => {
+  let res = true;
+  return dispatch => {
+    fetch('https://stormy-ridge-33799.herokuapp.com/contracts/' + idContract, {
+      method: 'put',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        token,
+        contract
+      })
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+        }
+      });
+  };
+};

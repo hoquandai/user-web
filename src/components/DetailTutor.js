@@ -46,7 +46,6 @@ class DetailTutor extends Component {
     };
     this.toggle = this.toggle.bind(this);
     this.handleCheckSchedule = this.handleCheckSchedule.bind(this);
-    this.handleHireTutor = this.handleHireTutor.bind(this);
     this.handeChangeTimeHire = this.handeChangeTimeHire.bind(this);
   }
 
@@ -126,7 +125,7 @@ class DetailTutor extends Component {
     e.preventDefault();
 
     const { hire } = this.props;
-    const { detailTutor } = this.state;
+    const { detailTutor, charge } = this.state;
     const userProfile = JSON.parse(localStorage.getItem('user'));
     const idTutor = detailTutor.id;
     const idStudent = userProfile.id;
@@ -149,7 +148,8 @@ class DetailTutor extends Component {
       status: 'Đang chờ',
       paid: false,
       tutor_id: idTutor,
-      student_id: idStudent
+      student_id: idStudent,
+      price: charge
     };
 
     hire(contract);
@@ -272,7 +272,7 @@ class DetailTutor extends Component {
                   toggle={this.toggle}
                   className={this.props.className}
                 >
-                  <Form row onSubmit={this.handleHireTutor}>
+                  <Form row onSubmit={e => this.handleHireTutor(e)}>
                     <ModalHeader toggle={this.toggle}>Thuê gia sư</ModalHeader>
                     <ModalBody>
                       <FormGroup className="row">

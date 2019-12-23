@@ -36,21 +36,21 @@ class DetailRequestOfTutor extends Component {
     super(props);
     this.state = {
       requestDetail: {
-        id: '1',
-        type: 'contract',
+        id: '',
+        type: '',
         attributes: {
-          course: '10',
-          subject: 'Toán',
-          addr: '155 Lê Hồng Phong',
-          schedule: 'T3, T4, T5',
-          time: '50',
-          status: 'Đang chờ',
-          paid: false,
-          tutor_id: 1,
-          price: 300000,
-          student_id: 2,
-          created_at: '2019-12-22T11:24:27.731Z',
-          updated_at: '2019-12-22T11:24:27.731Z'
+          course: '',
+          subject: '',
+          addr: '',
+          schedule: '',
+          time: '',
+          status: '',
+          paid: '',
+          tutor_id: '',
+          price: '',
+          student_id: '',
+          created_at: '',
+          updated_at: ''
         }
       },
       modal: false
@@ -58,7 +58,34 @@ class DetailRequestOfTutor extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const contractID = window.location.pathname.split('id:')[1];
+    // const token = JSON.parse(localStorage.getItem('userToken')).token;
+
+    let res = true;
+
+    fetch('https://stormy-ridge-33799.herokuapp.com/contracts/' + contractID, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (res) {
+          this.setState({
+            requestDetail: response.data
+          });
+        }
+        res = true;
+      });
+  }
 
   toggle() {
     this.setState({
@@ -66,10 +93,92 @@ class DetailRequestOfTutor extends Component {
     });
   }
 
+  handleAcceptClick() {
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    var contract = { status: 'Đang học' };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.status = 'Đang học';
+    this.setState({
+      requestDetail: requestDetail
+    });
+  }
+
+  handleRejectClick() {
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    var contract = { status: 'Đã từ chối' };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.status = 'Đã từ chối';
+    this.setState({
+      requestDetail: requestDetail
+    });
+  }
+
+  handleCancelClick() {
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    var contract = { status: 'Đã hủy' };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.status = 'Đã hủy';
+    this.setState({
+      requestDetail: requestDetail
+    });
+  }
+
+  handleCompleteClick() {
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    var contract = { status: 'Hoàn thành' };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.status = 'Hoàn thành';
+    this.setState({
+      requestDetail: requestDetail
+    });
+  }
+
+  handlePaymentClick() {
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    var contract = { paid: true };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.paid = true;
+    this.setState({
+      requestDetail: requestDetail
+    });
+  }
+
+  handleComplain(e) {
+    e.preventDefault();
+
+    const { updateContract } = this.props;
+    const { requestDetail } = this.state;
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const ipComplaint = e.target.ipComplaint.value;
+    var contract = { status: 'Đang khiếu nại', complaint: ipComplaint };
+
+    updateContract(userToken.token, requestDetail.id, contract);
+    requestDetail.attributes.status = 'Đang khiếu nại';
+    requestDetail.attributes.complaint = ipComplaint;
+    this.setState({
+      requestDetail: requestDetail,
+      modal: !this.state.modal
+    });
+  }
+
   render() {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const { requestDetail } = this.state;
-
     return (
       <div className="container mt-5">
         <div class="container instructors-info ml-5">
@@ -148,6 +257,7 @@ class DetailRequestOfTutor extends Component {
                         </div>
                       </Col>
                     </Row>
+
                     <Row>
                       <Col md="4">
                         <div className="text-left title-field mt-3">
@@ -160,6 +270,20 @@ class DetailRequestOfTutor extends Component {
                         </div>
                       </Col>
                     </Row>
+
+                    <Row>
+                      <Col md="4">
+                        <div className="text-left title-field mt-3">
+                          Chi phí:
+                        </div>
+                      </Col>
+                      <Col md="8">
+                        <div className="text-left content-detail mt-3">
+                          {requestDetail.attributes.price}
+                        </div>
+                      </Col>
+                    </Row>
+
                     <Row>
                       <Col md="4">
                         <div className="text-left title-field mt-3">
@@ -171,6 +295,18 @@ class DetailRequestOfTutor extends Component {
                           {requestDetail.attributes.status === 'Đang chờ' ? (
                             <Badge pill color="warning">
                               Đang chờ
+                            </Badge>
+                          ) : null}
+
+                          {requestDetail.attributes.status === 'Đã từ chối' ? (
+                            <Badge pill color="success">
+                              Đã từ chối
+                            </Badge>
+                          ) : null}
+
+                          {requestDetail.attributes.status === 'Đã hủy' ? (
+                            <Badge pill color="danger">
+                              Đã hủy
                             </Badge>
                           ) : null}
 
@@ -190,6 +326,13 @@ class DetailRequestOfTutor extends Component {
                           {requestDetail.attributes.status === 'Hoàn thành' ? (
                             <Badge pill color="success">
                               Hoàn thành
+                            </Badge>
+                          ) : null}
+
+                          {requestDetail.attributes.status ===
+                          'Đã hoàn tiền' ? (
+                            <Badge pill color="success">
+                              Đã hoàn tiền
                             </Badge>
                           ) : null}
                         </div>
@@ -227,7 +370,7 @@ class DetailRequestOfTutor extends Component {
                                     borderRadius: 6
                                   }}
                                   startIcon={<DoneIcon />}
-                                  onClick={() => this.handleCompleteClick()}
+                                  onClick={() => this.handleAcceptClick()}
                                 >
                                   Chấp nhận
                                 </Button>
@@ -240,14 +383,15 @@ class DetailRequestOfTutor extends Component {
                                     borderRadius: 6
                                   }}
                                   startIcon={<CloseIcon />}
-                                  onClick={() => this.handleCancelClick()}
+                                  onClick={() => this.handleRejectClick()}
                                 >
                                   Từ chối
                                 </Button>
                               </>
                             ) : null}
-                            {requestDetail.attributes === 'Đang khiếu nại' ||
-                            requestDetail.attributes === 'Đang học' ? (
+                            {requestDetail.attributes.status ===
+                              'Đang khiếu nại' ||
+                            requestDetail.attributes.status === 'Đang học' ? (
                               <Button
                                 color="outlined"
                                 style={{
@@ -269,8 +413,8 @@ class DetailRequestOfTutor extends Component {
                       <Row>
                         <Col>
                           <ButtonGroup className="mt-5">
-                            {requestDetail.attributes.status !==
-                            'Hoàn thành' ? (
+                            {requestDetail.attributes.status !== 'Hoàn thành' &&
+                            requestDetail.attributes.status !== 'Đang chờ' ? (
                               <Button
                                 className="mr-5"
                                 style={{
@@ -285,8 +429,7 @@ class DetailRequestOfTutor extends Component {
                                 Hoàn thành
                               </Button>
                             ) : null}
-                            {requestDetail.attributes.status === 'Đang chờ' ||
-                            requestDetail.attributes.status === 'Đang học' ? (
+                            {requestDetail.attributes.status === 'Đang chờ' ? (
                               <Button
                                 className="mr-5"
                                 color="outlined"
@@ -318,8 +461,9 @@ class DetailRequestOfTutor extends Component {
                                 Thanh toán
                               </Button>
                             ) : null}
-                            {requestDetail.attributes.status !==
-                            'Hoàn thành' ? (
+                            {requestDetail.attributes.status !== 'Hoàn thành' &&
+                            requestDetail.attributes.status !== 'Đã hủy' &&
+                            requestDetail.attributes.status !== 'Đang chờ' ? (
                               <Button
                                 style={{
                                   color: '#FFCC00',
@@ -340,7 +484,7 @@ class DetailRequestOfTutor extends Component {
                               toggle={this.toggle}
                               className={this.props.className}
                             >
-                              <Form onSubmit={this.handleComplain}>
+                              <Form onSubmit={e => this.handleComplain(e)}>
                                 <ModalHeader toggle={this.toggle}>
                                   Khiếu Nại
                                 </ModalHeader>
@@ -356,7 +500,7 @@ class DetailRequestOfTutor extends Component {
                                         style={{ height: '200px' }}
                                         type="textarea"
                                         name="text"
-                                        id="exampleText"
+                                        id="ipComplaint"
                                       />
                                     </div>
                                   </FormGroup>
@@ -428,6 +572,31 @@ class DetailRequestOfTutor extends Component {
               </Card>
             </Col>
           </Row>
+          {requestDetail.attributes.complaint ? (
+            <Row className="mt-4">
+              <Col sm={8} className="noMargin noPadding">
+                <Card>
+                  <CardHeader>
+                    <p
+                      style={{
+                        paddingTop: '10px',
+                        fontSize: '20px'
+                      }}
+                    >
+                      Khiếu Nại
+                    </p>
+                  </CardHeader>
+                  <CardBody>
+                    <Container>
+                      <Row>
+                        <p>{requestDetail.attributes.complaint}</p>
+                      </Row>
+                    </Container>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          ) : null}
         </div>
       </div>
     );

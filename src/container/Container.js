@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 import Profile from './Profile';
 import ViewALlTuTor from '../components/ViewAllTutor';
 import ListRequestOfTutor from '../components/ListRequestOfTutor';
-import DetailRequestOfTutor from '../components/DetailRequestOfTutor';
+import DetailRequestOfTutor from './DetailRequestOfTutor';
 
 class Container extends React.Component {
   PrivateRoute = ({ children }) => {
