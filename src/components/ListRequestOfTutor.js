@@ -85,7 +85,7 @@ class ListRequestOfTutor extends React.Component {
 
               fetch(
                 'https://stormy-ridge-33799.herokuapp.com/users/' +
-                  String(contract.attributes.student_id),
+                  String(contract.attributes.tutor_id),
                 {
                   method: 'get',
                   headers: {
