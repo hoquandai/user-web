@@ -12,9 +12,13 @@ import {
   Alert,
   Media,
   Card,
-  Table
+  Table,
+  Badge
 } from 'reactstrap';
 import fetch from 'cross-fetch';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 function AlertForm(props) {
   const { kindAlert, message } = props;
@@ -47,7 +51,9 @@ class Profile extends React.Component {
       pKindAlert: '',
       pMessage: '',
       listSkill: [],
-      listCheck: []
+      listCheck: [],
+      listContract: [],
+      listStudent: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,12 +62,6 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    // const { getListOutStandingTutor } = this.props;
-    // getListOutStandingTutor((res) => {
-    //   this.setState({
-    //     listOutStandingTutor: res.data
-    //   })
-    // })
     const userProfile = JSON.parse(localStorage.getItem('user'));
     if (userProfile.attributes.image) {
       this.setState({
@@ -109,6 +109,70 @@ class Profile extends React.Component {
 
           this.setState({
             listCheck: listCheckTemp
+          });
+        }
+        res = true;
+      });
+
+    fetch(
+      `https://stormy-ridge-33799.herokuapp.com/users/${String(
+        userProfile.id
+      )}/contracts`,
+      {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        console.log(res);
+        if (res) {
+          console.log('---------------oke' + response.data);
+          const listContractTemp = [];
+          const listStudentTemp = [];
+
+          response.data.forEach(contract => {
+            let resStudent = true;
+            console.log(response.data);
+            fetch(
+              'https://stormy-ridge-33799.herokuapp.com/users/' +
+                String(contract.attributes.student_id),
+              {
+                method: 'get',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+              .then(response => {
+                if (response.status !== 200) {
+                  resStudent = false;
+                }
+                return response.json();
+              })
+              .then(response => {
+                if (resStudent) {
+                  listStudentTemp.push(response.data);
+                  this.setState({
+                    listContract: listContractTemp,
+                    listStudent: listStudentTemp
+                  });
+                }
+              });
+            listContractTemp.push(contract);
+          });
+
+          this.setState({
+            listContract: response.data
           });
         }
         res = true;
@@ -255,9 +319,15 @@ class Profile extends React.Component {
     return <AlertForm kindAlert={pKindAlert} message={pMessage}></AlertForm>;
   }
 
+  handleClickDetailRequest(e) {
+    const idContract = e.target.id;
+    history.push('/detailContract/id:' + idContract);
+    window.location.reload();
+  }
+
   render() {
     const userProfile = JSON.parse(localStorage.getItem('user'));
-    const { image, listCheck } = this.state;
+    const { image, listCheck, listContract, listStudent } = this.state;
     const mapListSkill = listCheck.map(Skill => {
       return (
         <FormGroup check>
@@ -274,6 +344,140 @@ class Profile extends React.Component {
         </FormGroup>
       );
     });
+
+    const mapListContract = listContract.map(contract => {
+      console.log(listContract.length);
+      return (
+        <tr>
+          <td>
+            <Badge pill color="success">
+              {contract.id ? contract.id : 'Chưa có'}
+            </Badge>
+          </td>
+          {listStudent.length > 0 &&
+          listStudent.length === listContract.length ? (
+            <th scope="row">
+              <Media className="align-items-center">
+                <a className="avatar rounded-circle mr-3">
+                  <img
+                    alt="avatar"
+                    src={
+                      listStudent[listContract.indexOf(contract)].attributes
+                        .image
+                        ? 'https://stormy-ridge-33799.herokuapp.com' +
+                          listStudent[listContract.indexOf(contract)].attributes
+                            .image
+                        : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                    }
+                  />
+                </a>
+                <Media>
+                  <span className="mb-0 text-sm">
+                    {listStudent[listContract.indexOf(contract)].attributes.name
+                      ? listStudent[listContract.indexOf(contract)].attributes
+                          .name
+                      : 'Chưa cập nhập tên'}
+                  </span>
+                </Media>
+              </Media>
+            </th>
+          ) : null}
+
+          <td>
+            {contract.attributes.subject
+              ? contract.attributes.subject
+              : 'Chưa có'}
+          </td>
+
+          <td>
+            {contract.attributes.schedule
+              ? contract.attributes.schedule
+              : 'Chưa có'}
+          </td>
+
+          {contract.attributes.status === 'Đang chờ' ? (
+            <td>
+              <Badge pill color="warning">
+                Đang chờ
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.status === 'Đang học' ? (
+            <td>
+              <Badge pill color="primary">
+                Đang học
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.status === 'Đang khiếu nại' ? (
+            <td>
+              <Badge pill color="danger">
+                Đang khiếu nại
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.status === 'Hoàn thành' ? (
+            <td>
+              <Badge pill color="success">
+                Hoàn thành
+              </Badge>
+            </td>
+          ) : null}
+          {contract.attributes.status === 'Đã hủy' ? (
+            <td>
+              <Badge pill color="danger">
+                Đã hủy
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.status === 'Đã từ chối' ? (
+            <td>
+              <Badge pill color="success">
+                Đã từ chối
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.status === 'Đã hoàn tiền' ? (
+            <td>
+              <Badge pill color="success">
+                Đã hoàn tiền
+              </Badge>
+            </td>
+          ) : null}
+
+          {contract.attributes.paid ? (
+            <td>
+              <Badge pill color="success">
+                Đã thanh toán
+              </Badge>
+            </td>
+          ) : (
+            <td>
+              <Badge pill color="danger">
+                Chưa thanh toán
+              </Badge>
+            </td>
+          )}
+
+          <td className="text-right">
+            <Button
+              id={contract.id}
+              color="info"
+              className="detail-button"
+              onClick={e => this.handleClickDetailRequest(e)}
+            >
+              Chi tiết
+            </Button>
+          </td>
+        </tr>
+      );
+    });
+
     return (
       <div className="container">
         <div class="container instructors-info ml-5">
@@ -452,61 +656,17 @@ class Profile extends React.Component {
           <Card className="mt-4">
             <Table className="align-items-center table-flush" responsive>
               <thead className="thead-light">
-                <tr>
-                  <th scope="col">Người Thuê</th>
-                  <th scope="col">Lớp</th>
+                <tr className="text-center">
+                  <th scope="col">Mã HD</th>
+                  <th scope="col">Người thuê</th>
                   <th scope="col">Môn học</th>
                   <th scope="col">Lịch</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Thanh toán</th>
+                  <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <Media className="align-items-center">
-                      <a
-                        className="avatar rounded-circle mr-3"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <img
-                          alt="avatar"
-                          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQkwDf1RrSeDg0q4-1oBeo6MA8XgeGnd_SAjk9Ew_gx4Tw&_nc_ht=scontent.fsgn5-3.fna&oh=41eee2b569203717d343b9da007cc565&oe=5EAF7B12"
-                        />
-                      </a>
-                      <Media>
-                        <span className="mb-0 text-sm">
-                          Trương Phạm Nhật Tiến
-                        </span>
-                      </Media>
-                    </Media>
-                  </th>
-                  <td>10</td>
-                  <td>Toán</td>
-                  <td>T2,T3,T5</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <Media className="align-items-center">
-                      <a
-                        className="avatar rounded-circle mr-3"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <img
-                          alt="avatar"
-                          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQkwDf1RrSeDg0q4-1oBeo6MA8XgeGnd_SAjk9Ew_gx4Tw&_nc_ht=scontent.fsgn5-3.fna&oh=41eee2b569203717d343b9da007cc565&oe=5EAF7B12"
-                        />
-                      </a>
-                      <Media>
-                        <span className="mb-0 text-sm">Nguyễn Hữu Tú</span>
-                      </Media>
-                    </Media>
-                  </th>
-                  <td>10</td>
-                  <td>Toán</td>
-                  <td>T2,T3,T5</td>
-                </tr>
-              </tbody>
+              <tbody className="text-center">{mapListContract}</tbody>
             </Table>
           </Card>
         </div>

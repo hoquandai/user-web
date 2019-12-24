@@ -12,7 +12,11 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  Card,
+  Table,
+  Badge,
+  Media
 } from 'reactstrap';
 import fetch from 'cross-fetch';
 import { createBrowserHistory } from 'history';
@@ -38,6 +42,8 @@ class DetailTutor extends Component {
           skills: []
         }
       },
+      listContract: [],
+      listStudent: [],
       listSkill: [],
       modal: false,
 
@@ -94,6 +100,70 @@ class DetailTutor extends Component {
         if (res) {
           this.setState({
             listSkill: response.data
+          });
+        }
+        res = true;
+      });
+
+    fetch(
+      `https://stormy-ridge-33799.herokuapp.com/users/${String(
+        userID
+      )}/contracts`,
+      {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then(response => {
+        if (response.status !== 200) {
+          res = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        console.log(res);
+        if (res) {
+          console.log('---------------oke' + response.data);
+          const listContractTemp = [];
+          const listStudentTemp = [];
+
+          response.data.forEach(contract => {
+            let resStudent = true;
+            console.log(response.data);
+            fetch(
+              'https://stormy-ridge-33799.herokuapp.com/users/' +
+                String(contract.attributes.student_id),
+              {
+                method: 'get',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+              .then(response => {
+                if (response.status !== 200) {
+                  resStudent = false;
+                }
+                return response.json();
+              })
+              .then(response => {
+                if (resStudent) {
+                  listStudentTemp.push(response.data);
+                  this.setState({
+                    listContract: listContractTemp,
+                    listStudent: listStudentTemp
+                  });
+                }
+              });
+            listContractTemp.push(contract);
+          });
+
+          this.setState({
+            listContract: response.data
           });
         }
         res = true;
@@ -169,7 +239,14 @@ class DetailTutor extends Component {
 
   render() {
     // const { detailTutor } = this.props;
-    const { detailTutor, timeHire, charge, listSkill } = this.state;
+    const {
+      detailTutor,
+      timeHire,
+      charge,
+      listSkill,
+      listContract,
+      listStudent
+    } = this.state;
     const mapListSkill = detailTutor.attributes.skills.map(skillOfTutor => {
       for (var i = 0; i < listSkill.length; i++) {
         if (skillOfTutor === listSkill[i].id) {
@@ -177,6 +254,60 @@ class DetailTutor extends Component {
         }
       }
     });
+
+    const mapListContract = listContract.map(contract => {
+      console.log(listContract.length);
+      return (
+        <tr>
+          <td>
+            <Badge pill color="success">
+              {contract.id ? contract.id : 'Chưa có'}
+            </Badge>
+          </td>
+          {listStudent.length > 0 &&
+          listStudent.length === listContract.length ? (
+            <th scope="row">
+              <Media className="align-items-center">
+                <a className="avatar rounded-circle mr-3">
+                  <img
+                    alt="avatar"
+                    src={
+                      listStudent[listContract.indexOf(contract)].attributes
+                        .image
+                        ? 'https://stormy-ridge-33799.herokuapp.com' +
+                          listStudent[listContract.indexOf(contract)].attributes
+                            .image
+                        : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                    }
+                  />
+                </a>
+                <Media>
+                  <span className="mb-0 text-sm">
+                    {listStudent[listContract.indexOf(contract)].attributes.name
+                      ? listStudent[listContract.indexOf(contract)].attributes
+                          .name
+                      : 'Chưa cập nhập tên'}
+                  </span>
+                </Media>
+              </Media>
+            </th>
+          ) : null}
+
+          <td>
+            {contract.attributes.subject
+              ? contract.attributes.subject
+              : 'Chưa có'}
+          </td>
+
+          <td>
+            {contract.attributes.schedule
+              ? contract.attributes.schedule
+              : 'Chưa có'}
+          </td>
+        </tr>
+      );
+    });
+
     return (
       <>
         {// Object.keys(detailTutor).length > 1
@@ -353,6 +484,25 @@ class DetailTutor extends Component {
               </div>
             </div>
             {/* .single-course-wrap */}
+            <div className="container instructors-info ml-5">
+              <header class="entry-heading">
+                <h2 class="entry-title">Lịch sử dạy</h2>
+              </header>
+              <Card className="mt-4">
+                <Table className="align-items-center table-flush" responsive>
+                  <thead className="thead-light">
+                    <tr className="text-center">
+                      <th scope="col">Mã HD</th>
+                      <th scope="col">Người thuê</th>
+                      <th scope="col">Môn học</th>
+                      <th scope="col">Lịch</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-center">{mapListContract}</tbody>
+                </Table>
+              </Card>
+            </div>
           </div>
         ) : null}
       </>
