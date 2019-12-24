@@ -11,7 +11,9 @@ class ListRequestOfTutor extends React.Component {
     super(props);
     this.state = {
       listRequestToMe: [],
-      listRequestToOthers: []
+      listStudents: [],
+      listRequestToOthers: [],
+      listTutor: []
     };
   }
 
@@ -41,57 +43,97 @@ class ListRequestOfTutor extends React.Component {
         if (res) {
           const listRTMeTemp = [];
           const listRTOthersTemp = [];
+          const listStudentTemp = [];
+          const listTutorTemp = [];
 
           response.data.forEach(contract => {
             if (String(contract.attributes.tutor_id) === userProfile.id) {
+              let resStudent = true;
+              fetch(
+                'https://stormy-ridge-33799.herokuapp.com/users/' +
+                  String(contract.attributes.student_id),
+                {
+                  method: 'get',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                  }
+                }
+              )
+                .then(response => {
+                  if (response.status !== 200) {
+                    resStudent = false;
+                  }
+                  return response.json();
+                })
+                .then(response => {
+                  if (resStudent) {
+                    console.log(response.data.attributes);
+                    listStudentTemp.push(response.data);
+                    this.setState({
+                      listRequestToMe: listRTMeTemp,
+                      listRequestToOthers: listRTOthersTemp,
+                      listStudents: listStudentTemp,
+                      listTutor: listTutorTemp
+                    });
+                  }
+                });
               listRTMeTemp.push(contract);
             }
             if (String(contract.attributes.student_id) === userProfile.id) {
+              let resTutor = true;
+
+              fetch(
+                'https://stormy-ridge-33799.herokuapp.com/users/' +
+                  String(contract.attributes.student_id),
+                {
+                  method: 'get',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                  }
+                }
+              )
+                .then(response => {
+                  if (response.status !== 200) {
+                    resTutor = false;
+                  }
+                  return response.json();
+                })
+                .then(response => {
+                  if (resTutor) {
+                    listTutorTemp.push(response.data);
+                  }
+                  this.setState({
+                    listRequestToMe: listRTMeTemp,
+                    listRequestToOthers: listRTOthersTemp,
+                    listStudents: listStudentTemp,
+                    listTutor: listTutorTemp
+                  });
+                });
               listRTOthersTemp.push(contract);
             }
           });
 
-          this.setState({
-            listRequestToMe: listRTMeTemp,
-            listRequestToOthers: listRTOthersTemp
-          });
+          // this.setState({
+          //   listRequestToMe: listRTMeTemp,
+          //   listRequestToOthers: listRTOthersTemp,
+          //   listStudents: listStudentTemp,
+          //   listTutor: listTutorTemp
+          // });
         }
         res = true;
         return true;
       });
-
-    // fetch(`https://stormy-ridge-33799.herokuapp.com/contracts`, {
-    //   method: 'get',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(response => {
-    //     if (response.status !== 200) {
-    //       res = false;
-    //     }
-    //     return response.json();
-    //   })
-    //   .then(response => {
-    //     if (res) {
-    //       var listRequestToOthers = [];
-    //       response.data.map(contract => {
-    //         if (contract.attributes.student_id === userProfile.id) {
-    //           listRequestToOthers.push(contract);
-    //         }
-    //       });
-
-    //       this.setState({
-    //         listRequestToOthers: listRequestToOthers
-    //       });
-    //     }
-    //     res = true;
-    //   });
   }
 
   render() {
-    const { listRequestToMe, listRequestToOthers } = this.state;
+    const {
+      listRequestToMe,
+      listRequestToOthers,
+      listStudents,
+      listTutor
+    } = this.state;
     const mapListRequestToMe = listRequestToMe.map(request => {
       return (
         <tr>
@@ -100,22 +142,39 @@ class ListRequestOfTutor extends React.Component {
               {request.id ? request.id : 'Chưa có'}
             </Badge>
           </td>
-          <th scope="row">
-            <Media className="align-items-center">
-              <a
-                className="avatar rounded-circle mr-3"
-                // onClick={e => e.preventDefault()}
-              >
-                <img
-                  alt="avatar"
-                  src="https://scontent-hkg3-2.xx.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQmQK7N6pWofiE0KgtgJ3iOOEZ5hBZajEgbBC7vDvB4IOA&_nc_ht=scontent-hkg3-2.xx&oh=58c179d6691c367bf118decdea6e5a29&oe=5EAF7B12"
-                />
-              </a>
-              <Media>
-                <span className="mb-0 text-sm">Trương Phạm Nhật Tiến</span>
+          {listStudents.length > 0 &&
+          listStudents.length === listRequestToMe.length ? (
+            <th scope="row">
+              <Media className="align-items-center">
+                <a
+                  className="avatar rounded-circle mr-3"
+                  // onClick={e => e.preventDefault()}
+                >
+                  <img
+                    alt="avatar"
+                    src={
+                      listStudents[listRequestToMe.indexOf(request)].attributes
+                        .image
+                        ? 'https://stormy-ridge-33799.herokuapp.com' +
+                          listStudents[listRequestToMe.indexOf(request)]
+                            .attributes.image
+                        : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                    }
+                  />
+                </a>
+                <Media>
+                  <span className="mb-0 text-sm">
+                    {listStudents[listRequestToMe.indexOf(request)].attributes
+                      .name
+                      ? listStudents[listRequestToMe.indexOf(request)]
+                          .attributes.name
+                      : 'Chưa cập nhập tên'}
+                  </span>
+                </Media>
               </Media>
-            </Media>
-          </th>
+            </th>
+          ) : null}
+
           <td>
             {request.attributes.price ? request.attributes.price : 'Chưa có'}
           </td>
@@ -211,22 +270,38 @@ class ListRequestOfTutor extends React.Component {
               {request.id ? request.id : 'Chưa có'}
             </Badge>
           </td>
-          <th scope="row">
-            <Media className="align-items-center">
-              <a
-                className="avatar rounded-circle mr-3"
-                // onClick={e => e.preventDefault()}
-              >
-                <img
-                  alt="avatar"
-                  src="https://scontent-hkg3-2.xx.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQmQK7N6pWofiE0KgtgJ3iOOEZ5hBZajEgbBC7vDvB4IOA&_nc_ht=scontent-hkg3-2.xx&oh=58c179d6691c367bf118decdea6e5a29&oe=5EAF7B12"
-                />
-              </a>
-              <Media>
-                <span className="mb-0 text-sm">Trương Phạm Nhật Tiến</span>
+          {listTutor.length > 0 &&
+          listTutor.length === listRequestToOthers.length ? (
+            <th scope="row">
+              <Media className="align-items-center">
+                <a
+                  className="avatar rounded-circle mr-3"
+                  // onClick={e => e.preventDefault()}
+                >
+                  <img
+                    alt="avatar"
+                    src={
+                      listTutor[listRequestToOthers.indexOf(request)].attributes
+                        .image
+                        ? 'https://stormy-ridge-33799.herokuapp.com' +
+                          listTutor[listRequestToOthers.indexOf(request)]
+                            .attributes.image
+                        : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                    }
+                  />
+                </a>
+                <Media>
+                  <span className="mb-0 text-sm">
+                    {listTutor[listRequestToOthers.indexOf(request)].attributes
+                      .name
+                      ? listTutor[listRequestToOthers.indexOf(request)]
+                          .attributes.name
+                      : 'Chưa cập nhập tên'}
+                  </span>
+                </Media>
               </Media>
-            </Media>
-          </th>
+            </th>
+          ) : null}
           <td>
             {request.attributes.price ? request.attributes.price : 'Chưa có'}
           </td>
@@ -346,7 +421,7 @@ class ListRequestOfTutor extends React.Component {
                 <thead className="thead-light">
                   <tr className="text-center">
                     <th scope="col">Mã Hợp Đồng</th>
-                    <th scope="col">Học sinh</th>
+                    <th scope="col">Gia sư</th>
                     <th scope="col">Phí</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Thanh toán</th>

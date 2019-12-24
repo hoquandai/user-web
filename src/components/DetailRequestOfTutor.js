@@ -53,6 +53,38 @@ class DetailRequestOfTutor extends Component {
           updated_at: ''
         }
       },
+      tutor: {
+        id: '',
+        type: '',
+        attributes: {
+          name: '',
+          email: '',
+          dob: '',
+          gender: '',
+          phone: '',
+          city: '',
+          skills: [],
+          price: '',
+          desc: '',
+          image: ''
+        }
+      },
+      student: {
+        id: '',
+        type: '',
+        attributes: {
+          name: '',
+          email: '',
+          dob: '',
+          gender: '',
+          phone: '',
+          city: '',
+          skills: [],
+          price: '',
+          desc: '',
+          image: ''
+        }
+      },
       modal: false
     };
     this.toggle = this.toggle.bind(this);
@@ -63,7 +95,7 @@ class DetailRequestOfTutor extends Component {
     // const token = JSON.parse(localStorage.getItem('userToken')).token;
 
     let res = true;
-
+    //Lấy thông tin chi tiết hợp đồng
     fetch('https://stormy-ridge-33799.herokuapp.com/contracts/' + contractID, {
       method: 'get',
       headers: {
@@ -79,6 +111,63 @@ class DetailRequestOfTutor extends Component {
       })
       .then(response => {
         if (res) {
+          let res1 = true;
+          let res2 = true;
+
+          //Lấy thông tin gia sư
+          fetch(
+            'https://stormy-ridge-33799.herokuapp.com/users/' +
+              String(response.data.attributes.tutor_id),
+            {
+              method: 'get',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              }
+            }
+          )
+            .then(response => {
+              if (response.status !== 200) {
+                res1 = false;
+              }
+              return response.json();
+            })
+            .then(response => {
+              if (res1) {
+                this.setState({
+                  tutor: response.data
+                });
+              }
+              res1 = true;
+            });
+
+          //Lấy thông tin học sinh
+          fetch(
+            'https://stormy-ridge-33799.herokuapp.com/users/' +
+              String(response.data.attributes.student_id),
+            {
+              method: 'get',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              }
+            }
+          )
+            .then(response => {
+              if (response.status !== 200) {
+                res2 = false;
+              }
+              return response.json();
+            })
+            .then(response => {
+              if (res2) {
+                this.setState({
+                  student: response.data
+                });
+              }
+              res1 = true;
+            });
+
           this.setState({
             requestDetail: response.data
           });
@@ -178,7 +267,7 @@ class DetailRequestOfTutor extends Component {
 
   render() {
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    const { requestDetail } = this.state;
+    const { requestDetail, tutor, student } = this.state;
     return (
       <div className="container mt-5">
         <div class="container instructors-info ml-5">
@@ -542,14 +631,27 @@ class DetailRequestOfTutor extends Component {
                     <ListItemAvatar>
                       <Avatar
                         alt="tutor"
-                        src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/p720x720/77054448_2395267320735838_6975058001447092224_o.jpg?_nc_cat=111&_nc_ohc=ymh_DbtN4OoAQkwDf1RrSeDg0q4-1oBeo6MA8XgeGnd_SAjk9Ew_gx4Tw&_nc_ht=scontent.fsgn5-3.fna&oh=42f32e4b9ca1c08781385cf517a19443&oe=5EAB49FE"
+                        src={
+                          tutor.attributes.image
+                            ? 'https://stormy-ridge-33799.herokuapp.com' +
+                              tutor.attributes.image
+                            : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                        }
                       />
                     </ListItemAvatar>
                     <ListItemText
                       primary={
-                        <div className="party-name">Trương Phạm Nhật Tiến</div>
+                        <div className="party-name">
+                          {tutor.attributes.name
+                            ? tutor.attributes.name
+                            : 'Chưa cập nhâp tên'}
+                        </div>
                       }
-                      secondary="Xô Viết Nghệ Tĩnh-Bình Thạnh"
+                      secondary={
+                        tutor.attributes.city
+                          ? tutor.attributes.city
+                          : 'Chưa cập nhập Đia chỉ'
+                      }
                     />
                   </ListItem>
                   <Divider color="middle" component="li" className="d-block" />
@@ -557,15 +659,28 @@ class DetailRequestOfTutor extends Component {
                   <ListItem>
                     <ListItemAvatar>
                       <Avatar
-                        alt="tutor"
-                        src="https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-1/p100x100/53023841_1076299825887962_7777782565821218816_o.jpg?_nc_cat=103&_nc_ohc=7x2EufkFARsAQnn7u7koJ-vi8Nxyl55mC7R2dOQ4eBfXxrZwKutOzkhxg&_nc_ht=scontent.fsgn5-7.fna&oh=ab662d673e5d0665df05914441c0b64e&oe=5E6F6465"
+                        alt="student"
+                        src={
+                          student.attributes.image
+                            ? 'https://stormy-ridge-33799.herokuapp.com' +
+                              student.attributes.image
+                            : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                        }
                       />
                     </ListItemAvatar>
                     <ListItemText
                       primary={
-                        <div className="party-name">Lê Thanh Thành Toại</div>
+                        <div className="party-name">
+                          {student.attributes.name
+                            ? student.attributes.name
+                            : 'Chưa cập nhâp tên'}
+                        </div>
                       }
-                      secondary="Xô Viết Nghệ Tĩnh-Bình Thạnh"
+                      secondary={
+                        student.attributes.name
+                          ? student.attributes.name
+                          : 'Chưa cập nhâp địa chỉ'
+                      }
                     />
                   </ListItem>
                 </CardBody>

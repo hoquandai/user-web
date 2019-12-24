@@ -29,6 +29,9 @@ class Home extends Component {
         return response.json();
       })
       .then(response => {
+        if (response.data.length > 6) {
+          response.data = response.data.slice(0, 6);
+        }
         if (res) {
           this.setState({
             listUser: response.data
