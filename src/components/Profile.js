@@ -491,10 +491,10 @@ class Profile extends React.Component {
                   width="250"
                   height="250"
                   src={
-                    image
+                    image === userProfile.attributes.image
                       ? 'https://stormy-ridge-33799.herokuapp.com' +
                         String(image)
-                      : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                      : image
                   }
                   class=" rounded-circle"
                   alt="avatar"
