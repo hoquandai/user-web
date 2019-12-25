@@ -28,8 +28,10 @@ class ViewAllTuTor extends React.Component {
     super(props);
     this.state = {
       listUser: [],
-
-      listSkill: []
+      listSkill: [],
+      numberPage: 0,
+      isActive1: true,
+      isActive2: false
     };
     this.handleSortIncrease = this.handleSortIncrease.bind(this);
     this.handleSortDecrease = this.handleSortDecrease.bind(this);
@@ -100,9 +102,39 @@ class ViewAllTuTor extends React.Component {
     console.log(e.id);
   }
 
+  handleChangeNumberPage1() {
+    this.setState({
+      numberPage: 0,
+      isActive1: true,
+      isActive2: false
+    });
+  }
+
+  handleChangeNumberPage2() {
+    this.setState({
+      numberPage: 1,
+      isActive2: true,
+      isActive1: false
+    });
+  }
+
   render() {
-    const { listUser, listSkill } = this.state;
-    const mapListUser = listUser.map(user => <Tutor user={user}></Tutor>);
+    const {
+      listUser,
+      listSkill,
+      numberPage,
+      isActive1,
+      isActive2
+    } = this.state;
+    let listUserPage = null;
+    if (numberPage * 6 + 6 >= listUser.length) {
+      listUserPage = listUser.slice(numberPage * 6);
+    } else {
+      listUserPage = listUser.slice(numberPage * 6, 6);
+    }
+
+    const mapListUser = listUserPage.map(user => <Tutor user={user}></Tutor>);
+
     const mapListSkill = listSkill.map(skill => {
       return (
         <li key={skill.id}>
@@ -141,14 +173,11 @@ class ViewAllTuTor extends React.Component {
               <div class="pagination flex flex-wrap justify-content-between align-items-center">
                 <div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
                   <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
-                    <li class="active">
-                      <a>1</a>
+                    <li className={isActive1 ? 'active' : 'null'}>
+                      <a onClick={() => this.handleChangeNumberPage1()}>1</a>
                     </li>
-                    <li>
-                      <a>2</a>
-                    </li>
-                    <li>
-                      <a>3</a>
+                    <li className={isActive2 ? 'active' : 'null'}>
+                      <a onClick={() => this.handleChangeNumberPage2()}>2</a>
                     </li>
                     <li>
                       <a>
